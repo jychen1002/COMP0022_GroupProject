@@ -1,3 +1,9 @@
+CREATE DATABASE IF NOT EXISTS `Movie_Database`;
+USE Movie_Database
+--
+-- Table structure for table `my_to_do_tb`
+--
+
 -- MySQL dump 10.13  Distrib 8.0.19, for osx10.14 (x86_64)
 --
 -- Host: localhost    Database: newDB
