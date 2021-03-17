@@ -1,6 +1,6 @@
 <?php
-  $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
-  $query = "SELECT title FROM movie_name";
+  $connection = mysqli_connect('127.0.0.1','root','Amy2000718!','Movie_Database');
+  $query = "SELECT title FROM movies_info";
   $result = mysqli_query($connection,$query)
    or die('Error making select users query' . mysql_error());
   echo '<table border="1">';
