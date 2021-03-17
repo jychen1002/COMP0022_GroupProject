@@ -23,13 +23,14 @@
     $title = $row['title'];
     $id = $row['movieId'];
     echo '<h2>'.$title.'</h2>';
+    echo '<b>Year</b>: '.$row['year'].'</h2><br/>';
 
     $query="SELECT*FROM genres WHERE movieId = $id";
     $tags=mysqli_query($connection,$query);
     if(!$tags){
         die('Cannot read data!'.mysqli_error($connection));
     }
-    echo "Genre: ";
+    echo '<b>Genre</b>: ';
     while($row=mysqli_fetch_array($tags)){
         echo $row['genre']. ', '  ;  
     }
