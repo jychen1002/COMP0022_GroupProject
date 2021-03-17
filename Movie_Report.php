@@ -64,17 +64,17 @@
     echo '</table>';
 
 
-    $sql = "SELECT COUNT(rating) AS RTCOUNT, 5.0 AS SCORE from ratings WHERE movieId = 318 AND rating = 5.0;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 4.5 AS SCORE from ratings WHERE movieId = 318 AND rating = 4.5;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 4.0 AS SCORE from ratings WHERE movieId = 318 AND rating = 4.0;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 3.5 AS SCORE from ratings WHERE movieId = 318 AND rating = 3.5;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 3.0 AS SCORE from ratings WHERE movieId = 318 AND rating = 3.0;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 2.5 AS SCORE from ratings WHERE movieId = 318 AND rating = 2.5;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 2.0 AS SCORE from ratings WHERE movieId = 318 AND rating = 2.0;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 1.5 AS SCORE from ratings WHERE movieId = 318 AND rating = 1.5;";
-    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 1.0 AS SCORE from ratings WHERE movieId = 318 AND rating = 1.0;";
+    $sql = "SELECT COUNT(rating) AS RTCOUNT, 5.0 AS SCORE from ratings WHERE movieId = $id AND rating = 5.0;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 4.5 AS SCORE from ratings WHERE movieId = $id AND rating = 4.5;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 4.0 AS SCORE from ratings WHERE movieId = $id AND rating = 4.0;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 3.5 AS SCORE from ratings WHERE movieId = $id AND rating = 3.5;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 3.0 AS SCORE from ratings WHERE movieId = $id AND rating = 3.0;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 2.5 AS SCORE from ratings WHERE movieId = $id AND rating = 2.5;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 2.0 AS SCORE from ratings WHERE movieId = $id AND rating = 2.0;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 1.5 AS SCORE from ratings WHERE movieId = $id AND rating = 1.5;";
+    $sql .= "SELECT COUNT(rating) AS RTCOUNT, 1.0 AS SCORE from ratings WHERE movieId = $id AND rating = 1.0;";
 
-    $sql.= "SELECT COUNT(rating) AS RTCOUNT, 0.5 AS SCORE, FROM ratings WHERE movieId = 318 AND rating = 0.5;";
+    $sql.= "SELECT COUNT(rating) AS RTCOUNT, 0.5 AS SCORE, FROM ratings WHERE movieId = $id AND rating = 0.5;";
 
     if (mysqli_multi_query($connection, $sql)) {
       do {
