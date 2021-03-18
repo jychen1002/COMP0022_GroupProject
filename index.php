@@ -74,7 +74,7 @@
                             <p>1.118.940.376 The best service package is waiting for you</p>
                         </div>
                         <div class="hero__search__form">
-                            <form action="search.php" method="post">
+                            <form action="listing.php" method="post">
                                 <input type="text" placeholder="Search..." name="keywords">
                                 <div class="select__option">
                                     <select name="select_option">
