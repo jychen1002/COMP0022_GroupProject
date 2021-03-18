@@ -9,7 +9,7 @@
   </body>
 </html>
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','Amy2000718!','Movie_Database');
+    $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
     $keywords=$_POST['keywords'];
     $option = $_POST['select_option'];
     if(strcmp($option, "1")==0){
