@@ -62,3 +62,40 @@
     <script src="js/main.js"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>
+
+<?php
+if(isset($_POST['signup'])){
+    $username = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['pass'];
+    $re_pass = $_POST['re_pass'];
+    if(!isset($_POST['agree-term'])){
+        echo "<script>alert('need to tick the agreements')</script>";
+    }
+}
+if(strlen($password)<8){
+    exit('password should be at least 8<a href="javascript:history.back(-1);">retry</a>');
+}
+if($password == $re_pass){
+    $connection = mysqli_connect('127.0.0.1','root','','newDB');
+    if(!$connection){
+        die("Fail to connect: " . mysqli_connect_error());
+    }
+    $check = mysqli_query("SELECT username FROM user WHERE username = '$username' LIMIT 1");
+    if(mysqli_fetch_array($check)){
+        echo 'username already exists.<a href="javascript:history.back(-1);">retry</a>';
+        exit;
+    }
+    $password = md5($password);
+    $sql = "INSERT INTO user(username,'password',email)VALUE('$username','$password','$email')";
+    $result = mysqli_query($connection,$sql);
+    if($result){
+        exit('click here<a href="signin.php"> to log in</a>');
+    }else{
+        echo 'click<a href="javascript:history.back(-1);">retry</a>';
+    }
+}
+else{
+    echo 'passwords do not match<a href="javascript:history.back(-1);">retry</a>';
+}
+?>

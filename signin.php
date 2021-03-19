@@ -51,3 +51,24 @@
     <script src="js/main.js"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>
+
+<?php
+if(isset($_POST['signin'])){
+    $username = $_POST['your_name'];
+    $password = $_POST['your_pass'];
+}
+//connect to database
+$connection = mysqli_connect('127.0.0.1','root','','newDB');
+if(!$connection){
+    die("Fail to connect: " . mysqli_connect_error());
+}
+
+$sql = "SELECT * FROM user WHERE username = '$username' AND 'password' = '$password'";
+$result = mysqli_query($connection,$sql);
+if(mysqli_num_rows($result) == 1){
+    header('location:');
+}
+else{
+    echo "Fail to log in";
+}
+?>
