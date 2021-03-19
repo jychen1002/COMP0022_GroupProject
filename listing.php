@@ -148,7 +148,6 @@
             </div>
     
             <div class="listing__list">
-            <form action="listing.php" method="post">
             <?php
                 $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
                 $keywords=$_POST['keywords'];
@@ -159,22 +158,21 @@
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
-                    echo "<h2>Research Result</h2>";
                     while($row=mysqli_fetch_array($result)){
                         echo '<div class="listing__item">
-                        <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
-                        </div>
-                        <div class="listing__item__text">
-                            <div class="listing__item__text__inside">
-                                <h5>'.$row['title'].'</h5>
-                                <div class="listing__item__text__rating">
-                                    <div class="listing__item__rating__star">
-                                        '.$row['year'].'
+                                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
+                                </div>
+                                <div class="listing__item__text">
+                                    <div class="listing__item__text__inside">
+                                        <h5>'.$row['title'].'</h5>
+                                        <div class="listing__item__text__rating">
+                                            <div class="listing__item__rating__star">
+                                                <h5>'.$row['year'].'</h5>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>';      
+                            </div>';      
                     }
                 }
                 
