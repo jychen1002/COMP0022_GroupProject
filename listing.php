@@ -174,6 +174,7 @@
                                 </div>
                             </div>';      
                     }
+                    mysqli_free_result($result);
                 }
                 
                 if(strcmp($option, "2")==0){
@@ -182,31 +183,53 @@
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
-                    echo "<h2>Search Result</h2>";
-                    echo "<table border='1'><tr><td><b>Genre</b></td><td><b>Year</b></td><td><b>Movie Name</b></td></tr>";
                     while($row=mysqli_fetch_array($result)){
-                        echo '<tr><td>' . $row['genre']. '</td><td>' . $row['year'].'</td><td>' .
-                        $row['title']. '</tr></td>'  ;  
+                        echo '<div class="listing__item">
+                                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
+                                </div>
+                                <div class="listing__item__text">
+                                    <div class="listing__item__text__inside">
+                                        <h5>'.$row['title'].'</h5>
+                                        <div class="listing__item__text__rating">
+                                            <div class="listing__item__rating__star">
+                                                <h5>'.$row['year'].'</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>';      
                     }
-                    echo '</table>';
+                    mysqli_free_result($result);
                 }
-                mysqli_close($connection);
+                
 
                 if(strcmp($option, "3")==0){
-                    $sql="SELECT*FROM tags,movies_info WHERE tag like '%".$keywords."%' AND tags.movieId = movies_info.movieId ORDER BY tag";
+                    $sql="SELECT*FROM tags,movies_info WHERE tag like '%".$keywords."%' AND tags.movieId = movies_info.movieId ORDER BY year";
                     $result=mysqli_query($connection,$sql);
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
-                    echo "<h2>Search Result</h2>";
-                    echo "<table border='1'><tr><td><b>Tag</b></td><td><b>Year</b></td><td><b>Movie Name</b></td></tr>";
                     while($row=mysqli_fetch_array($result)){
-                        echo '<tr><td>' . $row['tag']. '</td><td>' .$row['year'].'</td><td>' .
-                        $row['title']. '</tr></td>'  ;  
+                        echo '<div class="listing__item">
+                                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
+                                </div>
+                                <div class="listing__item__text">
+                                    <div class="listing__item__text__inside">
+                                        <h5>'.$row['title'].'</h5>
+                                        <div class="listing__item__text__rating">
+                                            <div class="listing__item__rating__star">
+                                                <h5>'.$row['year'].'</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>';      
                     }
-                    echo '</table>';
+                    mysqli_free_result($result);
                 }
 
+                mysqli_close($connection);
+                
             ?>
 
 	        </form>
