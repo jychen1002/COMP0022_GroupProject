@@ -1022,6 +1022,11 @@ ol {
 	padding-left: 270px;
 }
 
+.ov-hid-popular{
+	overflow: hidden;
+	padding-left: 20px;
+}
+
 .filter__title h5 {
 	font-size: 20px;
 	color: #323232;
