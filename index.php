@@ -49,6 +49,7 @@
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
                             </ul>
                         </nav>
