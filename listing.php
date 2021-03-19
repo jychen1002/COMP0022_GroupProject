@@ -130,12 +130,38 @@
     <!-- Filter End -->
 
     <!-- Listing Section Begin -->
+    <?php
+        $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+        $keywords=$_POST['keywords'];                
+        $option = $_POST['select_option'];
+    ?>
     <section class="listing nice-scroll">
         <div id = "1">
             <div class="listing__text__top">
                 <div class="listing__text__top__left">
                     <h5>Results</h5>
-                    <span>18 Movies Found</span>
+                    <?php
+                        if(strcmp($option, "1")==0){
+                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE title like '%".$keywords."%'";
+                            $result=mysqli_query($connection,$sql);
+                            $row=mysqli_fetch_array($result);
+                            echo "<span>".$row['CT']." Movies Found</span>";
+                        }
+
+                        if(strcmp($option, "2")==0){
+                            $sql="SELECT COUNT(movies_info.movieId) AS CT FROM genres,movies_info WHERE genre like '%".$keywords."%' AND genres.movieId = movies_info.movieId";
+                            $result=mysqli_query($connection,$sql);
+                            $row=mysqli_fetch_array($result);
+                            echo "<span>".$row['CT']." Movies Found</span>";
+                        }
+
+                        if(strcmp($option, "3")==0){
+                            $sql="SELECT COUNT(movies_info.movieId) AS CT FROM tags,movies_info WHERE tag like '%".$keywords."%' AND tags.movieId = movies_info.movieId";
+                            $result=mysqli_query($connection,$sql);
+                            $row=mysqli_fetch_array($result);
+                            echo "<span>".$row['CT']." Movies Found</span>";
+                        }
+                    ?>
                 </div>
                 <div class="listing__text__top__right" id = "topright_1">
                     <a><img src="img/Group 12.png"alt="" width = "40%" height = "40%" id = "imgclick1" ></a>
@@ -149,9 +175,6 @@
     
             <div class="listing__list">
             <?php
-                $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
-                $keywords=$_POST['keywords'];
-                $option = $_POST['select_option'];
                 if(strcmp($option, "1")==0){
                     $sql="SELECT*FROM movies_info WHERE title like '%".$keywords."%' ORDER BY year";
                     $result=mysqli_query($connection,$sql);
@@ -231,8 +254,6 @@
                 mysqli_close($connection);
                 
             ?>
-
-	        </form>
             </div>
         </div>
     <div id = "2" style="display:none" >
