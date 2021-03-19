@@ -19,7 +19,7 @@
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="img/signin-image.jpg" alt="sing up image"></figure>
-                        <a href="./signup.html" class="signup-image-link">Create an account</a>
+                        <a href="./signup.php" class="signup-image-link">Create an account</a>
                     </div>
                     <div class="signin-form">
                         <h2 class="form-title">Sign in</h2>
@@ -58,7 +58,7 @@ if(isset($_POST['signin'])){
     $password = $_POST['your_pass'];
 }
 //connect to database
-$connection = mysqli_connect('127.0.0.1','root','','newDB');
+$connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
 if(!$connection){
     die("Fail to connect: " . mysqli_connect_error());
 }

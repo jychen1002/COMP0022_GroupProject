@@ -55,7 +55,7 @@
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="signin.html" class="login-btn"><i class="fa fa-user"></i></a>
+                            <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
     
             <div class="listing__list">
               <?php
-                $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+                $connection = mysqli_connect('127.0.0.1','root','Amy2000718!','Movie_Database');
                 $keywords=$_POST['keywords'];                
                 $option = $_POST['select_option'];
                 $query = "SELECT movies_info.movieId as ID, movies_info.title AS TITLE, movies_info.year AS YEAR, RT.AVG AS AVER, RT.COUNT AS CT, RT.VARIANCE AS VE FROM (SELECT movieId, VARIANCE(rating) AS VARIANCE, AVG(rating) AS AVG, COUNT(rating) AS COUNT FROM ratings GROUP BY movieId ORDER BY VARIANCE) as RT INNER JOIN movies_info ON RT.movieId = movies_info.movieId WHERE RT.COUNT > 30 AND RT.VARIANCE >= 0.8 ORDER BY RT.VARIANCE DESC, RT.COUNT DESC";

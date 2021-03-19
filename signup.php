@@ -50,7 +50,7 @@
                     </div>
                     <div class="signup-image">
                         <figure><img src="img/signup-image.jpg" alt="sing up image"></figure>
-                        <a href="./signin.html" class="signup-image-link">I am already member</a>
+                        <a href="./signin.php" class="signup-image-link">I am already member</a>
                     </div>
                 </div>
             </div>
