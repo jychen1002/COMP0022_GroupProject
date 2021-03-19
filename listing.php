@@ -38,17 +38,18 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="img/footer-logo.png" width="50%" height="50%" lt=""></a>
+                        <a href="./index.php"><img src="img/footer-logo.png" width="50%" height="50%" lt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a href="./listing.html">LISTING</a>
+                                <li><a href="./index.php">Searching</a>
+                                <li><a href="./ShowMovieList.php">LISTING</a>
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
-                                        <li><a href="./popular.html">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
                                     </ul>
                             </ul>
                         </nav>
