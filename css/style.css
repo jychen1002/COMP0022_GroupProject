@@ -2917,3 +2917,12 @@ ol {
 	border-radius: 2px;
 	padding: 13px 42px 12px;
 }
+
+
+.rating{
+	font-size:40px;
+	font-weight:800;
+	text-align:right;
+	padding: 30px 50px;
+	color:#ebd392;
+}
