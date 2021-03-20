@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="img/footer-logo.png" width="50%" height="50%" lt=""></a>
+                        <a href="./index.php"><img src="img/footer-logo.png" width="50%" height="50%" lt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
@@ -58,7 +58,7 @@
                                         </div>
                                     </div>
                                 </form></li>
-                                <li><a href="./listing.html">LISTING</a>
+                                <li><a href="./listing.php">LISTING</a>
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
                                         <li><a href="./popular.html">THE MOST POPULAR FILMS</a></li>
@@ -197,7 +197,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','Liao1531639504_','newDB');
+        $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>
