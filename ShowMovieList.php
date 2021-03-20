@@ -83,7 +83,7 @@
     
             <div class="listing__list">
             <?php
-              $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+              $connection = mysqli_connect('127.0.0.1','root','','newDB');
               $query = "SELECT*FROM movies_info";
               $result = mysqli_query($connection,$query)
                 or die('Error making select users query' . mysql_error());
