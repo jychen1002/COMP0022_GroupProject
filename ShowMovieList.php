@@ -45,16 +45,17 @@
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a href="./index.php">Searching</a>
+                                <li><a href="./index.php">SEARCHING</a>
                                 <li><a href="./ShowMovieList.php">LISTING</a>
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="signin.html" class="login-btn"><i class="fa fa-user"></i></a>
+                            <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
                         </div>
                     </div>
                 </div>

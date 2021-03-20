@@ -6,6 +6,7 @@
   <body>
 	  <h1>Predict</h1><br/>
 	<form action="predicting_rating.php" method="post">
+    <input type="text" name="tag" placeholder="Input tags seperated by comma">
 		<input type="text" name="genre" placeholder="Input genres seperated by comma">
 		<input type="submit" value="Submit">
 	</form>
@@ -13,10 +14,12 @@
 </html>
 
 <?php
-$connection = mysqli_connect('127.0.0.1','root','','newDB');
+$connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
 if(!$connection){
     die("Fail to connect: " . mysqli_connect_error());
 }
+$tag = $_POST['tag'];
+$tag_list = explode(',',$tag);
 $genre = $_POST['genre'];
 $genre_list = explode(',',$genre);
 $length = count($genre_list);
@@ -24,6 +27,16 @@ $length = count($genre_list);
 function format($condition){
     return("'" . $condition . "'");
 }
+$temp = implode(",", array_map("format", $tag_list));
+$tag_sql = "SELECT AVG(R.rating) AS AverageScore FROM ratings R
+    JOIN tags T ON R.movieId = T.movieId
+    WHERE T.tag IN ($temp)";
+$res = mysqli_query($connection,$tag_sql);
+$row = mysqli_fetch_array($res);
+if(!$res){
+    die('Cannot read data!'.mysqli_error($connection));
+}
+echo "<p>mean score by tag: ${row['AverageScore']}\n</p>";
 //average rating of movie with single genre
 if($length == 1){
     $sql = "SELECT AVG(R.rating) AS AverageScore FROM ratings R 
