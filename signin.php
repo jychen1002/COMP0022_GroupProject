@@ -120,20 +120,21 @@
 <?php
 if(isset($_POST['signin'])){
     $username = $_POST['your_name'];
-    $password = $_POST['your_pass'];
-}
-//connect to database
-$connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
-if(!$connection){
-    die("Fail to connect: " . mysqli_connect_error());
-}
+    $password = md5($_POST['your_pass']);
 
-$sql = "SELECT * FROM user WHERE username = '$username' AND 'password' = '$password'";
-$result = mysqli_query($connection,$sql);
-if(mysqli_num_rows($result) == 1){
-    header('location:');
-}
-else{
-    echo "Fail to log in";
+    //connect to database
+    $connection = mysqli_connect('127.0.0.1','root','','newDB');
+    if(!$connection){
+        die("Fail to connect: " . mysqli_connect_error());
+    }
+
+    $sql = "SELECT ID FROM users WHERE name = '$username' AND password = '$password' LIMIT 1";
+    $result = mysqli_query($connection,$sql);
+    if(mysqli_fetch_array($result)){
+        echo "<script>alert('log in');location.href='index.php';</script>";
+    }
+    else{
+        echo "<script>alert('Fail to log in')</script>";
+    }
 }
 ?>

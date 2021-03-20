@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign In</title>
+    <title>Sign Up</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -138,28 +138,31 @@ if(isset($_POST['signup'])){
     }
 }
 if(strlen($password)<8){
-    exit('password should be at least 8<a href="javascript:history.back(-1);">retry</a>');
-}
-if($password == $re_pass){
-    $connection = mysqli_connect('127.0.0.1','root','','newDB');
-    if(!$connection){
-        die("Fail to connect: " . mysqli_connect_error());
-    }
-    $check = mysqli_query("SELECT username FROM user WHERE username = '$username' LIMIT 1");
-    if(mysqli_fetch_array($check)){
-        echo 'username already exists.<a href="javascript:history.back(-1);">retry</a>';
-        exit;
-    }
-    $password = md5($password);
-    $sql = "INSERT INTO user(username,'password',email)VALUE('$username','$password','$email')";
-    $result = mysqli_query($connection,$sql);
-    if($result){
-        exit('click here<a href="signin.php"> to log in</a>');
-    }else{
-        echo 'click<a href="javascript:history.back(-1);">retry</a>';
-    }
+    echo "<script>alert('password should be at least 8')</script>";
 }
 else{
-    echo 'passwords do not match<a href="javascript:history.back(-1);">retry</a>';
+    if($password == $re_pass){
+        $connection = mysqli_connect('127.0.0.1','root','','newDB');
+        if(!$connection){
+            die("Fail to connect: " . mysqli_connect_error());
+        }
+        $check = mysqli_query("SELECT users.name FROM users WHERE users.name = '$username' LIMIT 1");
+        if(mysqli_fetch_array($check)){
+            echo "<script>alert('username already exists.')</script>";
+            exit;
+        }
+        $password = md5($password);
+        $sql = "INSERT INTO users(name,email,password)VALUE('$username','$email','$password')";
+        $result = mysqli_query($connection,$sql);
+        if($result){
+            echo "<script>alert('successfully sign up');location.href='signin.php';</script>";
+            header('location:signin.php');
+        }else{
+            echo "<script>alert('fail to sign up')</script>";
+        }
+    }
+    else{
+        echo "<script>alert('passwords do not match')</script>";
+    }
 }
 ?>
