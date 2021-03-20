@@ -12,7 +12,7 @@
   </body>
 </html>
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','','newDB');
+    $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
     $keywords=$_POST['keywords'];
     $sql="SELECT*FROM movies_info WHERE title like '%".$keywords."%'";
     $result=mysqli_query($connection,$sql);

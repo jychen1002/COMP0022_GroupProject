@@ -14,7 +14,7 @@
 </html>
 
 <?php
-$connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+$connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
 if(!$connection){
     die("Fail to connect: " . mysqli_connect_error());
 }
