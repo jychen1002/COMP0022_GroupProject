@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 
-<body class="ov-hid">
+<body class="ov-hid-popular">
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -64,75 +64,10 @@
     </header>
     <!-- Header Section End -->
 
-    <!-- Filter Begin -->
-    <div class="filter nice-scroll">
-        <div class="filter__title">
-            <h5><i class="fa fa-filter"></i> Filter</h5>
-        </div>
-        <div class="filter__search">
-            <input type="text">
-        </div>
-        <div class="filter__select">
-            <select>
-                <option value="">All Genres</option>
-                <option value="">Action</option>
-                <option value="">Adventure</option>
-                <option value="">Animation</option>
-                <option value="">Comedy</option>
-                <option value="">Crime</option>
-                <option value="">Documentary</option>
-                <option value="">Drama</option>
-
-            </select>
-        </div>
-        <div class="filter__tags">
-            <h6>Tag</h6>
-            <label for="coupon">
-                Coupons
-                <input type="checkbox" id="coupon">
-                <span class="checkmark"></span>
-            </label>
-            <label for="sa">
-                Smoking Allowed
-                <input type="checkbox" id="sa">
-                <span class="checkmark"></span>
-            </label>
-            <label for="camping">
-                Camping
-                <input type="checkbox" id="camping">
-                <span class="checkmark"></span>
-            </label>
-            <label for="hot-spots">
-                Hot Spots
-                <input type="checkbox" id="hot-spots">
-                <span class="checkmark"></span>
-            </label>
-            <label for="internet">
-                Internet
-                <input type="checkbox" id="internet">
-                <span class="checkmark"></span>
-            </label>
-            <label for="tr">
-                Top Rated
-                <input type="checkbox" id="tr">
-                <span class="checkmark"></span>
-            </label>
-            <label for="hd">
-                Hot Deal
-                <input type="checkbox" id="hd">
-                <span class="checkmark"></span>
-            </label>
-        </div>
-        <div class="filter__btns">
-            <button type="submit">Filter Results</button>
-            <button type="submit" class="filter__reset">Reset All</button>
-        </div>
-    </div>
-    <!-- Filter End -->
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
+        $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>
