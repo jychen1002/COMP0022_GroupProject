@@ -71,6 +71,8 @@
     <div class="main">
         <section class="sign-in">
             <div class="container">
+            <?php session_start();
+                if(!$_SESSION['user']){ ?>
                 <div class="signin-content">
                     <div class="signin-image">
                         <figure><img src="img/signin-image.jpg" alt="sing up image"></figure>
@@ -97,6 +99,8 @@
                         </form>
                     </div>
                 </div>
+                <?php }else{ ?>
+                    <h1><?php echo "user already log in";?></h1><?php } ?>
             </div>
         </section>
     </div>
@@ -123,7 +127,7 @@ if(isset($_POST['signin'])){
     $password = md5($_POST['your_pass']);
 
     //connect to database
-    $connection = mysqli_connect('127.0.0.1','root','','newDB');
+    $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
     if(!$connection){
         die("Fail to connect: " . mysqli_connect_error());
     }
@@ -131,7 +135,9 @@ if(isset($_POST['signin'])){
     $sql = "SELECT ID FROM users WHERE name = '$username' AND password = '$password' LIMIT 1";
     $result = mysqli_query($connection,$sql);
     if(mysqli_fetch_array($result)){
-        echo "<script>alert('log in');location.href='index.php';</script>";
+        session_start();
+        $_SESSION['user'] = $username;
+        echo "<script>location.href='index.php';</script>";
     }
     else{
         echo "<script>alert('Fail to log in')</script>";

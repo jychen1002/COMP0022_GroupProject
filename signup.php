@@ -136,33 +136,33 @@ if(isset($_POST['signup'])){
     if(!isset($_POST['agree-term'])){
         echo "<script>alert('need to tick the agreements')</script>";
     }
-}
-if(strlen($password)<8){
-    echo "<script>alert('password should be at least 8')</script>";
-}
-else{
-    if($password == $re_pass){
-        $connection = mysqli_connect('127.0.0.1','root','','newDB');
-        if(!$connection){
-            die("Fail to connect: " . mysqli_connect_error());
-        }
-        $check = mysqli_query("SELECT users.name FROM users WHERE users.name = '$username' LIMIT 1");
-        if(mysqli_fetch_array($check)){
-            echo "<script>alert('username already exists.')</script>";
-            exit;
-        }
-        $password = md5($password);
-        $sql = "INSERT INTO users(name,email,password)VALUE('$username','$email','$password')";
-        $result = mysqli_query($connection,$sql);
-        if($result){
-            echo "<script>alert('successfully sign up');location.href='signin.php';</script>";
-            header('location:signin.php');
-        }else{
-            echo "<script>alert('fail to sign up')</script>";
-        }
+
+    if(strlen($password)<8){
+        echo "<script>alert('password should be at least 8')</script>";
     }
     else{
-        echo "<script>alert('passwords do not match')</script>";
+        if($password == $re_pass){
+            $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+            if(!$connection){
+                die("Fail to connect: " . mysqli_connect_error());
+            }
+            $check = mysqli_query("SELECT users.name FROM users WHERE users.name = '$username' LIMIT 1");
+            if(mysqli_fetch_array($check)){
+                echo "<script>alert('username already exists.')</script>";
+                exit;
+            }
+            $password = md5($password);
+            $sql = "INSERT INTO users(name,email,password)VALUE('$username','$email','$password')";
+            $result = mysqli_query($connection,$sql);
+            if($result){
+                echo "<script>location.href='signin.php';</script>";
+            }else{
+                echo "<script>alert('fail to sign up')</script>";
+            }
+        }
+        else{
+            echo "<script>alert('passwords do not match')</script>";
+        }
     }
 }
 ?>
