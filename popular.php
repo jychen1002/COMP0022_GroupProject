@@ -1,3 +1,6 @@
+<?php
+    $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -84,21 +87,17 @@
     
             <div class="listing__list">
               <?php
-                $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
-                $keywords=$_POST['keywords'];                
-                $option = $_POST['select_option'];
-                $sql="SELECT movies_info.title AS NEWT, RT.AVERAGE AS NEWA, RT.CT AS NEWC FROM (SELECT movieId AS ID, AVG(rating) AS AVERAGE, COUNT(movieId) AS CT from ratings GROUP BY movieId) as RT INNER JOIN movies_info ON RT.ID = movies_info.movieId WHERE RT.AVERAGE > 3.5 AND RT.CT > 50 ORDER BY RT.AVERAGE DESC, RT.CT DESC";
+                $sql="SELECT movies_info.title AS NEWT, movies_info.movieId AS NEWI, movies_info.year AS NEWY, movies_info.imglink AS NEWIMG, RT.AVERAGE AS NEWA, RT.CT AS NEWC FROM (SELECT movieId AS ID, AVG(rating) AS AVERAGE, COUNT(movieId) AS CT from ratings GROUP BY movieId) as RT INNER JOIN movies_info ON RT.ID = movies_info.movieId WHERE RT.AVERAGE > 3.5 AND RT.CT > 50 ORDER BY RT.AVERAGE DESC, RT.CT DESC";
                 $result=mysqli_query($connection,$sql);
                 if(!$result){
-                  die('Cannot read data!'.mysqli_error($connection));
+                    die('Cannot read data!'.mysqli_error($connection));        
                 }
                 while($row=mysqli_fetch_array($result)){
                   echo '<div class="listing__item">
-                          <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
-                          </div>
+                        <img src= "'.$row['NEWIMG'].'">
                           <div class="listing__item__text">
                               <div class="listing__item__text__inside">
-                                  <h5>'.$row['NEWT'].'</h5>
+                                  <h5 onclick = "to_report(this)">'.$row['NEWT'].'</h5>
                                   <div class="listing__item__text__rating">
                                       <div class="listing__item__rating__star">
                                           <h5>Rating: '.$row['NEWA'].' ('.$row['NEWC'].')</h5>
@@ -116,7 +115,6 @@
         <div class="listing__text__top">
             <div class="listing__text__top__left">
                 <h5>THE MOST POPULAR FILMS</h5>
-                <span>18 Movies Found</span>
             </div>
             <div class="listing__text__top__right" id = "topright_1" style="display:none">
                 <a><img src="img/Group 12.png" width = "40%" height = "40%" id = "imgclick1" ></a>
@@ -133,25 +131,29 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Ranking</th>
-                                <th scope="col">Movie ID</th>
-                                <th scope="col">Poster</th>
+                                <th scope="col" style="width: 5%;">Movie ID</th>
                                 <th scope="col">Movie Name</th>
-                                <th scope="col">Directors</th>
-                                <th scope="col">Actors</th>
-                                <th scope="col">Rating</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Average Rating</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td scope="row">1</td>
-                                <td></td>
-                                <td> The Shawshank Redemption</td>
-                                <td>Frank Darabont</td>
-                                <td> Stephen King </td>
-                                <td>9.2</td>
-                            </tr>
+                            <?php
+                                $sql="SELECT movies_info.title AS NEWT, movies_info.movieId AS NEWI, movies_info.year AS NEWY, RT.AVERAGE AS NEWA, RT.CT AS NEWC FROM (SELECT movieId AS ID, AVG(rating) AS AVERAGE, COUNT(movieId) AS CT from ratings GROUP BY movieId) as RT INNER JOIN movies_info ON RT.ID = movies_info.movieId WHERE RT.AVERAGE > 3.5 AND RT.CT > 50 ORDER BY RT.AVERAGE DESC, RT.CT DESC";
+                                $result=mysqli_query($connection,$sql);
+                                if(!$result){
+                                    die('Cannot read data!'.mysqli_error($connection));        
+                                }
+                                while($row=mysqli_fetch_array($result)){
+                                    echo'<tr>
+                                        <th scope="row">'.$row['NEWI'].'</th>
+                                        <td> '.$row['NEWT'].'</td>
+                                        <td>'.$row['NEWY'].'</td>
+                                        <td>'.$row['NEWA'].'</td>
+                                        </tr>';
+                                }
+                                mysqli_free_result($result);
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -177,6 +179,12 @@
         })
     })
         </script>
+        <script >
+       function to_report(e){
+           var movie_name = $(e).text();
+           window.location.href = "../report.php?movie_name="+movie_name;
+       }
+            </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

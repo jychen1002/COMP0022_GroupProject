@@ -1,3 +1,7 @@
+<?php
+  $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
+  $name = $_GET['movie_name'];
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -41,7 +45,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="img/footer-logo.png" width="50%" height="50%" lt=""></a>
+                        <a href="./index.php"><img src="img/footer-logo.png" width="50%" height="50%" lt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
@@ -49,15 +53,16 @@
                         <nav class="header__menu mobile-menu">
                             <ul>
                               <li><a href="./index.php">SEARCHING</a>
-                                <li><a href="./listing.html">LISTING</a>
+                                <li><a href="./ShowMovieList.php">LISTING</a>
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
-                                        <li><a href="./popular.html">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="signin.html" class="login-btn"><i class="fa fa-user"></i></a>
+                            <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
                         </div>
                     </div>
                 </div>
@@ -87,7 +92,9 @@
       </div>
       <div class="col-md-6">
           <div >
-              <h2 style="font-weight:900;">The Shawshank Redemption</h2>
+            <?php
+              echo'<h2 style="font-weight:900;">'.$name.'</h2>'
+            ?>
             <h2 class=rating >9.3</h2>
               </div>
         <p class="pt-1">Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.</p>
@@ -177,7 +184,6 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-    $name = $_GET['movie_name'];
       </script>
 
 </body>
