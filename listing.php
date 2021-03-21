@@ -197,7 +197,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+        $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>
@@ -227,6 +227,9 @@
                             $row=mysqli_fetch_array($result);
                             echo "<span>".$row['CT']." Movies Found</span>";
                         }
+
+
+
                     ?>
                 </div>
                 <div class="listing__text__top__right" id = "topright_1">
@@ -241,16 +244,33 @@
     
             <div class="listing__list">
             <?php
+
+
+
+            
+            //echo "<img src=\"https://image.tmdb.org/t/p/w300$poster_path\">";
+
+        
+
+
+
                 if(strcmp($option, "1")==0){
-                    $sql="SELECT*FROM movies_info WHERE title like '%".$keywords."%' ORDER BY year";
+
+                    //$sql="SELECT LINK.imdbId AS IMDBID, MV.title AS TITLE, MV.year AS YEAR FROM links AS LINK INNER JOIN (SELECT * FROM movies_info where title like '%".$keywords."%') AS MV ON LINK.movieId = MV.movieId ORDER BY MV.year DESC";
+
+                    $sql="SELECT * FROM movies_info WHERE title like '%".$keywords."%'";
+                    //$sql="SELECT*FROM movies_info WHERE title like '%".$keywords."%' ORDER BY year";
                     $result=mysqli_query($connection,$sql);
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
                     while($row=mysqli_fetch_array($result)){
+                        
+
                         echo '<div class="listing__item">
-                                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
-                                </div>
+                          <img src= "'.$row['imglink'].'">
+                        
+                                
                                 <div class="listing__item__text">
                                     <div class="listing__item__text__inside">
                                         <h5>'.$row['title'].'</h5>
@@ -267,15 +287,18 @@
                 }
                 
                 if(strcmp($option, "2")==0){
-                    $sql="SELECT*FROM genres,movies_info WHERE genre like '%".$keywords."%' AND genres.movieId = movies_info.movieId ORDER BY year";
+                    $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM genres WHERE genre like '%".$keywords."%') ORDER BY year DESC";
                     $result=mysqli_query($connection,$sql);
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
                     while($row=mysqli_fetch_array($result)){
                         echo '<div class="listing__item">
-                                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
-                                </div>
+                               
+                                 <img src= "'.$row['imglink'].'">
+
+
+                                
                                 <div class="listing__item__text">
                                     <div class="listing__item__text__inside">
                                         <h5>'.$row['title'].'</h5>
@@ -293,15 +316,16 @@
                 
 
                 if(strcmp($option, "3")==0){
-                    $sql="SELECT*FROM tags,movies_info WHERE tag like '%".$keywords."%' AND tags.movieId = movies_info.movieId ORDER BY year";
+                    
+                    $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM tags WHERE tag like '%".$keywords."%') ORDER BY year DESC";
                     $result=mysqli_query($connection,$sql);
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
                     while($row=mysqli_fetch_array($result)){
                         echo '<div class="listing__item">
-                                <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
-                                </div>
+                           <img src= "'.$row['imglink'].'">
+                                
                                 <div class="listing__item__text">
                                     <div class="listing__item__text__inside">
                                         <h5>'.$row['title'].'</h5>
