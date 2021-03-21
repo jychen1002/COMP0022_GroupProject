@@ -55,7 +55,7 @@
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
+                            <a href="signin.html" class="login-btn"><i class="fa fa-user"></i></a>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
+        $connection = mysqli_connect('127.0.0.1','root','','');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>
@@ -86,14 +86,14 @@
                         }
 
                         if(strcmp($option, "2")==0){
-                            $sql="SELECT COUNT(movies_info.movieId) AS CT FROM genres,movies_info WHERE genre like '%".$keywords."%' AND genres.movieId = movies_info.movieId";
+                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from genres WHERE genre like '%".$keywords."%')";
                             $result=mysqli_query($connection,$sql);
                             $row=mysqli_fetch_array($result);
                             echo "<span>".$row['CT']." Movies Found</span>";
                         }
 
                         if(strcmp($option, "3")==0){
-                            $sql="SELECT COUNT(movies_info.movieId) AS CT FROM tags,movies_info WHERE tag like '%".$keywords."%' AND tags.movieId = movies_info.movieId";
+                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from tags WHERE tag like '%".$keywords."%')";
                             $result=mysqli_query($connection,$sql);
                             $row=mysqli_fetch_array($result);
                             echo "<span>".$row['CT']." Movies Found</span>";
@@ -114,8 +114,16 @@
             </div>
     
             <div class="listing__list">
-            <?php            
+            <?php
+
+
+
+            
             //echo "<img src=\"https://image.tmdb.org/t/p/w300$poster_path\">";
+
+        
+
+
 
                 if(strcmp($option, "1")==0){
 
