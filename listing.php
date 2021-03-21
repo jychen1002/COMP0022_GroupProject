@@ -55,7 +55,7 @@
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="signin.html" class="login-btn"><i class="fa fa-user"></i></a>
+                            <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','','');
+        $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>
