@@ -1,5 +1,5 @@
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+    $connection = mysqli_connect('127.0.0.1','root','Liao1531639504_','Movie_Database');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,7 +162,7 @@
                                     $year = $_POST['year'];
                                     $genre = $_POST['genre'];
                                     $release = $_POST['release'];
-                                    $max = "SELECT MAX(movieId) AS MI FROM movies_info";
+                                    $max = "SELECT MAX(movieId) AS MI FROM 'movies_info'";
                                     $max_result = mysqli_query($connection,$max);
                                     $row = mysqli_fetch_array($max_result);
                                     $id = $row['MI'] +1;

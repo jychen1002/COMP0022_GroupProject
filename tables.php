@@ -1,5 +1,5 @@
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+    $connection = mysqli_connect('127.0.0.1','root','Liao1531639504_','Movie_Database');
 ?>
 <!DOCTYPE html>
 <html lang="en">

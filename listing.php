@@ -407,9 +407,15 @@
         </script>
 
        <script >
+        var targetURL  = "../report.php?";
        function to_report(e){
            var movie_name = $(e).text();
-           window.location.href = "../report.php?movie_name="+movie_name;
+           targetURL = targrtURL +"movie_name="+movie_name;
+       }
+
+       function to_report_year(e){
+           var year = $(e).text();
+           window.location.href = targetURL + "year="+movie_name;
        }
             </script>
     <script src="js/bootstrap.min.js"></script>
