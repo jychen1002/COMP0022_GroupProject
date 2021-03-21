@@ -1,5 +1,10 @@
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+    $connection = mysqli_connect('127.0.0.1','root','Liao1531639504_');
+    if ($conn->connect_error) {
+        die("连接失败: " . $conn->connect_error);
+    } 
+    echo "连接成功";
+    ?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,7 +146,6 @@
                                             <th>Year</th>
                                             <th>Genre</th>
                                             <th>Released</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -250,6 +254,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script>
+
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
             var actions = $("table td:last-child").html();
@@ -258,15 +263,15 @@
                 $(this).attr("disabled", "disabled");
                 var index = $("table tbody tr:last-child").index();
                 var row = '<tr>' +
-                    '<td><input type="text" class="form-control" name="Position" id="Position"></td>' +
-                    '<td><input type="text" class="form-control" name="Office" id="Office"></td>' +
-                    '<td><input type="text" class="form-control" name="Age" id="Age"></td>' +
-                    '<td><input type="text" class="form-control" name="Age" id="Age"></td>' +
-                    '<td><input type="text" class="form-control" name="Age" id="Age"></td>' +
-                    '<td><input type="text" class="form-control" name="Age" id="Age"></td>' +
-                    '<td>' + actions + '</td>' +
+                    '<form action="tables.php" method="post">'+
+                    '<td><input type="text" class="form-control" name="movie_Name" id="movie_Name"></td>' +
+                    '<td><input type="text" class="form-control" name="year" id="year"></td>' +
+                    '<td><input type="text" class="form-control" name="genre" id="genre"></td>' +
+                    '<td><input type="text" class="form-control" name="release" id="release"></td>' +
+                    '<td><a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a></td>' +
+                    '</form>'+
                 '</tr>';
-                $("table").append(row);		
+                $("table").prepend(row);		
                 $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
                 $('[data-toggle="tooltip"]').tooltip();
             });
@@ -289,16 +294,21 @@
                     });			
                     $(this).parents("tr").find(".add, .edit").toggle();
                     $(".add-new").removeAttr("disabled");
-                }		
+                }
+                <?php
+                   
+                   $title = $_POST['movie_Name'];
+                   $year = $_POST['year'];
+                   echo "title".$title;
+                   $sql = "INSERT INTO movies_info(title,year)VALUES('$title','$year')";
+                   $result = mysqli_query($connection,$sql);
+                   if(!$result){
+                       die('Cannot read data!'.mysqli_error($connection));
+                     }
+               ?>	
+                
             });
-            // Edit row on edit button click
-            $(document).on("click", ".edit", function(){		
-                $(this).parents("tr").find("td:not(:last-child)").each(function(){
-                    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-                });		
-                $(this).parents("tr").find(".add, .edit").toggle();
-                $(".add-new").attr("disabled", "disabled");
-            });
+
             // Delete row on delete button click
             $(document).on("click", ".delete", function(){
                 $(this).parents("tr").remove();
@@ -306,6 +316,7 @@
             });
         });
         </script>
+        
 </body>
 
 </html>
