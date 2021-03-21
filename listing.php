@@ -45,11 +45,12 @@
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><a href="./index.php">Searching</a>
+                                <li><a href="./index.php">SEARCHING</a>
                                 <li><a href="./ShowMovieList.php">LISTING</a>
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
                             </ul>
                         </nav>
@@ -67,7 +68,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+        $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>
@@ -210,16 +211,36 @@
                     }
                     mysqli_free_result($result);
                 }
-                mysqli_close($connection);
-                
             ?>
             </div>
         </div>
     <div id = "2" style="display:none" >
         <div class="listing__text__top">
             <div class="listing__text__top__left">
-                <h5>Results</h5>
-                <span>18 Movies Found</span>
+            <h5>Results</h5>
+                <?php
+                    if(strcmp($option, "1")==0){
+                        $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE title like '%".$keywords."%'";
+                        $result=mysqli_query($connection,$sql);
+                        $row=mysqli_fetch_array($result);
+                        echo "<span>".$row['CT']." Movies Found</span>";
+                    }
+
+                    if(strcmp($option, "2")==0){
+                        $sql="SELECT COUNT(movies_info.movieId) AS CT FROM genres,movies_info WHERE genre like '%".$keywords."%' AND genres.movieId = movies_info.movieId";
+                        $result=mysqli_query($connection,$sql);
+                        $row=mysqli_fetch_array($result);
+                        echo "<span>".$row['CT']." Movies Found</span>";
+                    }
+
+                    if(strcmp($option, "3")==0){
+                        $sql="SELECT COUNT(movies_info.movieId) AS CT FROM tags,movies_info WHERE tag like '%".$keywords."%' AND tags.movieId = movies_info.movieId";
+                        $result=mysqli_query($connection,$sql);
+                        $row=mysqli_fetch_array($result);
+                        echo "<span>".$row['CT']." Movies Found</span>";
+                    }
+
+                ?>
             </div>
             <div class="listing__text__top__right" id = "topright_1" style="display:none">
                 <a><img src="img/Group 12.png" width = "40%" height = "40%" id = "imgclick1" ></a>
@@ -237,22 +258,128 @@
                         <thead>
                             <tr>
                                 <th scope="col" style="width: 5%;">Movie ID</th>
-                                <th scope="col">Poster</th>
                                 <th scope="col">Movie Name</th>
-                                <th scope="col">Directors</th>
-                                <th scope="col">Actors</th>
-                                <th scope="col">Rating</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Average Rating</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td></td>
-                                <td> The Shawshank Redemption</td>
-                                <td>Frank Darabont</td>
-                                <td> Stephen King </td>
-                                <td>9.2</td>
-                            </tr>
+                        <?php
+                            if(strcmp($option, "1")==0){   
+                                $sql="SELECT * FROM movies_info WHERE title like '%".$keywords."%'";
+                                //$sql="SELECT*FROM movies_info WHERE title like '%".$keywords."%' ORDER BY year";
+                                $result=mysqli_query($connection,$sql);
+                                if(!$result){
+                                    die('Cannot read data!'.mysqli_error($connection));
+                                }
+
+                                while($row=mysqli_fetch_array($result)){
+                                    $id = $row['movieId'];
+                                
+                                    $query="SELECT*FROM ratings WHERE movieId = $id";
+                                    $ratings=mysqli_query($connection,$query);
+                                    $sum = 0;
+                                    $count = 0;
+                                    if(!$ratings){
+                                        die('Cannot read data!'.mysqli_error($connection));
+                                    }
+
+                                    while($row1=mysqli_fetch_array($ratings)){
+                                        $sum = $sum + $row1['rating'];
+                                        $count = $count +1;
+                                    }
+                                    if($count > 0){
+                                        $average = $sum / $count;
+                                    }else{
+                                        $average = "Not enough viewers to rate";
+                                    }
+                                    echo'<tr>
+                                        <th scope="row">'.$row['movieId'].'</th>
+                                        <td> '.$row['title'].'</td>
+                                        <td>'.$row['year'].'</td>
+                                        <td>'.$average.'</td>
+                                        </tr>';
+                                }
+                                mysqli_free_result($result);
+                            }
+                            
+                            if(strcmp($option, "2")==0){
+                                $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM genres WHERE genre like '%".$keywords."%') ORDER BY year DESC";
+                                $result=mysqli_query($connection,$sql);
+                                if(!$result){
+                                    die('Cannot read data!'.mysqli_error($connection));
+                                }
+                                while($row=mysqli_fetch_array($result)){
+                                    $id = $row['movieId'];
+                                
+                                    $query="SELECT*FROM ratings WHERE movieId = $id";
+                                    $ratings=mysqli_query($connection,$query);
+                                    $sum = 0;
+                                    $count = 0;
+                                    if(!$ratings){
+                                        die('Cannot read data!'.mysqli_error($connection));
+                                    }
+
+                                    while($row1=mysqli_fetch_array($ratings)){
+                                        $sum = $sum + $row1['rating'];
+                                        $count = $count +1;
+                                    }
+                                    if($count > 0){
+                                        $average = $sum / $count;
+                                    }else{
+                                        $average = "Not enough viewers to rate";
+                                    }
+                                    echo'<tr>
+                                        <th scope="row">'.$row['movieId'].'</th>
+                                        <td> '.$row['title'].'</td>
+                                        <td>'.$row['year'].'</td>
+                                        <td>'.$average.'</td>
+                                        </tr>';
+                                }
+                                mysqli_free_result($result);
+                            }
+                            
+
+                            if(strcmp($option, "3")==0){
+                                
+                                $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM tags WHERE tag like '%".$keywords."%') ORDER BY year DESC";
+                                $result=mysqli_query($connection,$sql);
+                                if(!$result){
+                                    die('Cannot read data!'.mysqli_error($connection));
+                                }
+                                while($row=mysqli_fetch_array($result)){
+                                    $id = $row['movieId'];
+                                
+                                    $query="SELECT*FROM ratings WHERE movieId = $id";
+                                    $ratings=mysqli_query($connection,$query);
+                                    $sum = 0;
+                                    $count = 0;
+                                    if(!$ratings){
+                                        die('Cannot read data!'.mysqli_error($connection));
+                                    }
+
+                                    while($row1=mysqli_fetch_array($ratings)){
+                                        $sum = $sum + $row1['rating'];
+                                        $count = $count +1;
+                                    }
+                                    if($count > 0){
+                                        $average = $sum / $count;
+                                    }else{
+                                        $average = "Not enough viewers to rate";
+                                    }
+                                    
+
+                                    echo'<tr>
+                                        <th scope="row">'.$row['movieId'].'</th>
+                                        <td> '.$row['title'].'</td>
+                                        <td>'.$row['year'].'</td>
+                                        <td>'.$average.'</td>
+                                        </tr>';
+                                }
+                                mysqli_free_result($result);
+                            }
+                            mysqli_close($connection);    
+                        ?>
                         </tbody>
                     </table>
                 </div>
@@ -282,7 +409,7 @@
        <script >
        function to_report(e){
            var movie_name = $(e).text();
-           window.location.href = "../report.html?movie_name="+movie_name;
+           window.location.href = "../report.php?movie_name="+movie_name;
        }
             </script>
     <script src="js/bootstrap.min.js"></script>
