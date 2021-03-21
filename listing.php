@@ -32,8 +32,8 @@
         <div class="loader"></div>
     </div>
 
-     <!-- Header Section Begin -->
-     <header class="header header--normal">
+    <!-- Header Section Begin -->
+    <header class="header header--normal">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
@@ -42,39 +42,19 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
-                    
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-<<<<<<< HEAD
-                                <li><form class=" navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search movies,tags,and genres..."
-                                            aria-label="Search" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form></li>
-                                <li><a href="./listing.php">LISTING</a>
-                                <li><a href=#>RANKING</a>
-                                    <ul class="dropdown">
-                                        <li><a href="./popular.html">THE MOST POPULAR FILMS</a></li>
-=======
-                            <li><a href="./index.php">SEARCHING</a>
+                                <li><a href="./index.php">Searching</a>
                                 <li><a href="./ShowMovieList.php">LISTING</a>
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
-                                        <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
->>>>>>> dda33eaa9bf82afb8c1542f01486c0bd8924a28e
                                     </ul>
                             </ul>
                         </nav>
                         <div class="header__menu__right">
-                            <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
+                            <a href="signin.html" class="login-btn"><i class="fa fa-user"></i></a>
                         </div>
                     </div>
                 </div>
@@ -89,108 +69,63 @@
         <div class="filter__title">
             <h5><i class="fa fa-filter"></i> Filter</h5>
         </div>
-        <hr class="sidebar-divider">
-        <div class="filter__tags" id="filter_tags">
+        <div class="filter__search">
+            <input type="text">
+        </div>
+        <div class="filter__select">
+            <select>
+                <option value="">All Genres</option>
+                <option value="">Action</option>
+                <option value="">Adventure</option>
+                <option value="">Animation</option>
+                <option value="">Comedy</option>
+                <option value="">Crime</option>
+                <option value="">Documentary</option>
+                <option value="">Drama</option>
+
+            </select>
+        </div>
+        <div class="filter__tags">
             <h6>Tag</h6>
-            <label for="Action">
-                Action
-                <input type="checkbox" id="filter__tags" >
+            <label for="coupon">
+                Coupons
+                <input type="checkbox" id="coupon">
                 <span class="checkmark"></span>
             </label>
-            <label for="Adventure">
-                Adventure
-                <input type="checkbox" id="Adventure" >
+            <label for="sa">
+                Smoking Allowed
+                <input type="checkbox" id="sa">
                 <span class="checkmark"></span>
             </label>
-            <label for="Animation">
-                Animation
-                <input type="checkbox" id="Animation">
+            <label for="camping">
+                Camping
+                <input type="checkbox" id="camping">
                 <span class="checkmark"></span>
             </label>
-            <label for="Children">
-                Children
-                <input type="checkbox" id="Children">
+            <label for="hot-spots">
+                Hot Spots
+                <input type="checkbox" id="hot-spots">
                 <span class="checkmark"></span>
             </label>
-            <label for="Comedy">
-                Comedy
-                <input type="checkbox" id="Comedy">
+            <label for="internet">
+                Internet
+                <input type="checkbox" id="internet">
                 <span class="checkmark"></span>
             </label>
-            <label for="Fantasy">
-                Fantasy
-                <input type="checkbox" id="Fantasy">
+            <label for="tr">
+                Top Rated
+                <input type="checkbox" id="tr">
                 <span class="checkmark"></span>
             </label>
-            <label for="Romance">
-                Romance
-                <input type="checkbox" id="Romance">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Drama">
-                Drama
-                <input type="checkbox" id="Drama">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Crime">
-                Crime
-                <input type="checkbox" id="Crime">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Thriller">
-                Thriller
-                <input type="checkbox" id="Thriller">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Horror">
-                Horror
-                <input type="checkbox" id="Horror">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Mystery">
-                Mystery
-                <input type="checkbox" id="Mystery">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Sci-Fi">
-                Sci-Fi
-                <input type="checkbox" id="Sci-Fi">
-                <span class="checkmark"></span>
-            </label>
-            <label for="War">
-                War
-                <input type="checkbox" id="War">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Musical">
-                Musical
-                <input type="checkbox" id="Musical">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Documentary">
-                Documentary
-                <input type="checkbox" id="Documentary">
-                <span class="checkmark"></span>
-            </label>
-            <label for="IMAX">
-                IMAX
-                <input type="checkbox" id="IMAX">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Western">
-                Western
-                <input type="checkbox" id="Western">
-                <span class="checkmark"></span>
-            </label>
-            <label for="Film-Noir">
-                Film-Noir
-                <input type="checkbox" id="Film-Noir">
+            <label for="hd">
+                Hot Deal
+                <input type="checkbox" id="hd">
                 <span class="checkmark"></span>
             </label>
         </div>
         <div class="filter__btns">
             <button type="submit">Filter Results</button>
-            <button class="filter__reset" onclick="reset()" value = "Reset form">Reset All</button>
+            <button type="submit" class="filter__reset">Reset All</button>
         </div>
     </div>
     <!-- Filter End -->
@@ -252,8 +187,8 @@
                                 <div class="listing__item__pic set-bg" data-setbg="img/listing/list-1.jpg">
                                 </div>
                                 <div class="listing__item__text">
-                                    <div class="listing__item__text__inside">
-                                        <h5>'.$row['title'].'</h5>
+                                    <div class="listing__item__text__inside" id="movie_title">
+                                        <h5 onclick = "to_report(this)">'.$row['title'].'</h5>
                                         <div class="listing__item__text__rating">
                                             <div class="listing__item__rating__star">
                                                 <h5>'.$row['year'].'</h5>
@@ -316,7 +251,6 @@
                     }
                     mysqli_free_result($result);
                 }
-
                 mysqli_close($connection);
                 
             ?>
@@ -385,6 +319,13 @@
         })
     })
         </script>
+
+       <script >
+       function to_report(e){
+           var movie_name = $(e).text();
+           window.location.href = "../report.html?movie_name="+movie_name;
+       }
+            </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
@@ -394,15 +335,6 @@
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        function reset(){
-            var inputs = document.querySelectorAll('filter_ctags');
-            console.log(inputs); 
-        for (var i = 0; i < inputs.length; i++) { 
-            inputs[i].checked = false; 
-        }
-        }
-    </script>
 </body>
 
 </html>
