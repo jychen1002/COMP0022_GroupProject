@@ -129,7 +129,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <div style="text-align:right">
-                                    <button type="button" onclick="window.location.href='./AddNewData.php'" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                                <li><a href="./tables.php">Return To Table</a>
                                 </div>
                         </div>
                         <div class="card-body">
@@ -141,47 +141,46 @@
                                             <th>Year</th>
                                             <th>Genre</th>
                                             <th>Released</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                        $sql = "SELECT*FROM movies_info ORDER BY year";
-                                        $result = mysqli_query($connection,$sql)
-                                            or die('Error making select users query' . mysql_error());
-              
-                                        while ($row = mysqli_fetch_array($result)){
-                                            $id = $row['movieId'];
-                                            echo'<tr>
-                                            <td>'.$row['title'].'</td>
-                                            <td>'.$row['year'].'</td>';
-                                            echo '<td>';
-
-                                            $query = "SELECT*FROM genres WHERE movieId = $id";
-                                            $genres=mysqli_query($connection,$query);
-                                            if(!$genres){
-                                                die('Cannot read data!'.mysqli_error($connection));
-                                            }
-                                            while($row_genre=mysqli_fetch_array($genres)){
-                                                echo $row_genre['genre']. ', ';  
-                                            }
-                                            echo'</td>';
-
-                                            $query = "SELECT*FROM release_info WHERE movieId = $id";
-                                            $release=mysqli_query($connection,$query);
-                                            $row_release = mysqli_fetch_array($release);
-                                            if($row_release['released']){
-                                                echo'<td>Yes</td>';
-                                            }else{ echo'<td>No</td>';}
+                                        <tr>
+                                            <form action="AddNewData.php" method="post">
+                                                <td><input type="text" class="form-control" name="movie_Name" id="movie_Name"></td>
+                                                <td><input type="text" class="form-control" name="year" id="year"></td>
+                                                <td><input type="text" class="form-control" name="genre" id="genre"></td>
+                                                <td><input type="text" class="form-control" name="release" id="release"></td>
+                                                <button type="submit">Submit</button>
+                                            </form>
                                             
-                                            echo '<td>
-                                                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                            </td>
-                                        </tr>';
-                                        }
-                                        ?>
+                                        </tr>   
                                     </tbody>
+                                    
                                 </table>
+                                <?php
+                                    $movie_Name=$_POST['movie_Name'];
+                                    $year = $_POST['year'];
+                                    $genre = $_POST['genre'];
+                                    $release = $_POST['release'];
+                                    $max = "SELECT MAX(movieId) AS MI FROM movies_info";
+                                    $max_result = mysqli_query($connection,$max);
+                                    $row = mysqli_fetch_array($max_result);
+                                    $id = $row['MI'] +1;
+                                    if($movie_Name!=""){
+                                        $sql = "INSERT INTO movies_info(movieId,title,year)VALUES('$id','$movie_Name','$year')";
+                                        $result = mysqli_query($connection,$sql);
+                                        if(!$result){
+                                            die('Cannot read data!'.mysqli_error($connection));
+                                        }
+                                        $genre_sql = "INSERT INTO genres(movieId, genre)VALUES('$id','$genre')";
+                                        mysqli_query($connection,$genre_sql);
+                                        $release_message= "1";
+                                        if($release == "Yes"){
+                                            $release_sql = "INSERT INTO release_info(movieId, released)VALUES('$id', b'1')";
+                                            mysqli_query($connection,$release_sql);
+                                        }
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>
