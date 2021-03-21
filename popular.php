@@ -1,5 +1,5 @@
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+    $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -10,7 +10,7 @@
     <meta name="keywords" content="Directing, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Directing | Template</title>
+    <title>Most Popular Films</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -93,11 +93,12 @@
                     die('Cannot read data!'.mysqli_error($connection));        
                 }
                 while($row=mysqli_fetch_array($result)){
-                  echo '<div class="listing__item">
+                    $movie_id = $row['NEWI'];
+                  echo '<div class="listing__item" id = "'.$movie_id.'" onclick = "to_report(this.id)">
                         <img src= "'.$row['NEWIMG'].'">
                           <div class="listing__item__text">
                               <div class="listing__item__text__inside">
-                                  <h5 onclick = "to_report(this)">'.$row['NEWT'].'</h5>
+                                  <h5>'.$row['NEWT'].'</h5>
                                   <div class="listing__item__text__rating">
                                       <div class="listing__item__rating__star">
                                           <h5>Rating: '.$row['NEWA'].' ('.$row['NEWC'].')</h5>
@@ -179,12 +180,11 @@
         })
     })
         </script>
-        <script >
-       function to_report(e){
-           var movie_name = $(e).text();
-           window.location.href = "../report.php?movie_name="+movie_name;
-       }
-            </script>
+        <script type="text/javascript">
+            function to_report(e){
+                window.location.href = "../report.php?movieId="+e;
+            }
+        </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

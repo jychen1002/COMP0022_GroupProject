@@ -7,7 +7,7 @@
     <meta name="keywords" content="Directing, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Directing | Template</title>
+    <title>Movie List</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -84,13 +84,14 @@
     
             <div class="listing__list">
             <?php
-              $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+              $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
               $query = "SELECT*FROM movies_info";
               $result = mysqli_query($connection,$query)
                 or die('Error making select users query' . mysql_error());
               
               while ($row = mysqli_fetch_array($result)){
-                echo '<div class="listing__item">
+                $movie_id = $row['movieId'];
+                echo '<div class="listing__item" id = "'.$movie_id.'" onclick = "to_report(this.id)">
                 <img src= "'.$row['imglink'].'">
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
@@ -136,7 +137,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                $connection = mysqli_connect('127.0.0.1','root','','Movie_Database');
+                                $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
                                 $sql="SELECT movies_info.title AS NEWT, movies_info.movieId AS NEWI, movies_info.year AS NEWY, RT.AVERAGE AS NEWA, RT.CT AS NEWC FROM (SELECT movieId AS ID, AVG(rating) AS AVERAGE, COUNT(movieId) AS CT from ratings GROUP BY movieId) as RT INNER JOIN movies_info ON RT.ID = movies_info.movieId ORDER BY movies_info.movieId";
                                 $result=mysqli_query($connection,$sql);
                                 if(!$result){
@@ -178,12 +179,11 @@
         })
     })
         </script>
-         <script >
-       function to_report(e){
-           var movie_name = $(e).text();
-           window.location.href = "../report.php?movie_name="+movie_name;
-       }
-            </script>
+         <script type="text/javascript">
+            function to_report(e){
+                window.location.href = "../report.php?movieId="+e;
+            }
+        </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

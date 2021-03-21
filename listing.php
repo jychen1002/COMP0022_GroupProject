@@ -7,7 +7,7 @@
     <meta name="keywords" content="Directing, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Directing | Template</title>
+    <title>Search Results</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -350,10 +350,10 @@
         </script>
 
        <script type="text/javascript">
-       function to_report(e){
-           window.location.href = "../report.php?movieId="+e;
-       }
-            </script>
+            function to_report(e){
+                window.location.href = "../report.php?movieId="+e;
+            }
+        </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
