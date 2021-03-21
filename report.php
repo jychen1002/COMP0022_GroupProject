@@ -1,6 +1,28 @@
 <?php
   $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
-  $name = $_GET['movie_name'];
+  $id = $_GET['movieId'];
+  $sql="SELECT*FROM movies_info WHERE movieId = $id";
+  $result=mysqli_query($connection,$sql);
+  if(!$result){
+      die('Cannot read data!'.mysqli_error($connection));
+  }
+  $row=mysqli_fetch_array($result);
+  $image = $row['imglink'];
+  $title = $row['title'];
+  $year = $row['year'];
+
+  $query="SELECT*FROM ratings WHERE movieId = $id";
+  $ratings=mysqli_query($connection,$query);
+  $sum = 0;
+  $count = 0;
+  if(!$ratings){
+      die('Cannot read data!'.mysqli_error($connection));
+  }
+  while($row=mysqli_fetch_array($ratings)){
+      $sum = $sum + $row['rating'];
+      $count = $count +1;
+  }
+  $average = $sum / $count;
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -11,7 +33,7 @@
     <meta name="keywords" content="Directing, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Directing | Template</title>
+    <title>Movie Report</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -84,72 +106,174 @@
         <div>
           <div class="col-12 mb-0">
             <figure style="text-align: center">
-              <img src="./img/1.jpg" width="55%" height="55%">
+            <?php
+              echo'<img src= '.$image.' width="150%" height="150%">';
+            ?>
             </figure>         
           </div>
         </div>
   
       </div>
       <div class="col-md-6">
-          <div >
+          <div>
             <?php
-              echo'<h2 style="font-weight:900;">'.$name.'</h2>'
+              echo'<h2 style="font-weight:900;">'.$title.'</h2>';
+              if($count == 0){
+                echo"Not enough viewers to rate";
+              }else{
+                echo'<h2 class=rating >Average Rating: '.$average.'('.$count.')</h2>';
+              }
             ?>
-            <h2 class=rating >9.3</h2>
-              </div>
-        <p class="pt-1">Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.</p>
+          </div>
         <div class="table-responsive">
           <table class="table table-sm table-borderless mb-0">
             <tbody>
-              <tr>
-                <th class="pl-0 w-25" scope="row"><strong>Genres:</strong></th>
-                <td>test</td>
-              </tr>
-              <tr>
-                <th class="pl-0 w-25" scope="row"><strong>Dierctors:</strong></th>
-                <td>test</td>
-              </tr>
-              <tr>
-                <th class="pl-0 w-25" scope="row"><strong>Actors:</strong></th>
-                <td>test</td>
-              </tr>
+                <?php
+                  echo'<tr><th class="pl-0 w-25" scope="row"><strong>Year :</strong></th>
+                  <td>'.$year.'</td></tr>';
+                  echo'<tr><th class="pl-0 w-25" scope="row"><strong>Genres :</strong></th>';
+
+                  $query="SELECT*FROM genres WHERE movieId = $id";
+                  $genres=mysqli_query($connection,$query);
+                  if(!$genres){
+                      die('Cannot read data!'.mysqli_error($connection));
+                  }
+                  while($row_genre = mysqli_fetch_array($genres)){
+                    echo"<td>".$row_genre['genre']."</td>";
+                  }
+                  echo'</tr>';
+                  mysqli_free_result($genres);
+                ?>
             </tbody>
           </table>
         <hr>
         <h4 style="padding-bottom:30px">
             Tags
         </h4>
-        <span class="badge badge-pill badge-primary">Primary</span>
-        <span class="badge badge-pill badge-secondary">Secondary</span>
-        <span class="badge badge-pill badge-success">Success</span>
+        <?php
+          $query="SELECT COUNT(tag) AS TAGCOUNT, tag from tags WHERE movieId = $id GROUP BY tag";
+          $tags=mysqli_query($connection,$query);
+          if(!$tags){
+              die('Cannot read data!'.mysqli_error($connection));
+          }
+
+          while($row=mysqli_fetch_array($tags)){
+              echo '<span class="badge badge-pill badge-primary"  style="margin-right:20px; margin-bottom:20px;">'.$row['tag'].' ('.$row['TAGCOUNT'].')'.'</span>'; 
+          }
+        ?>
         <hr>
         <h4 style="padding-bottom:30px">
-            Viewers who might like this movie:
+            Rating Distribution
         </h4>
-        <table class="table table-sm table-borderless mb-0">
-          <tbody>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Openness:</strong></th>
-              <td>test</td>
-            </tr>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Agreeableness:</strong></th>
-              <td>test</td>
-            </tr>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Emotional_stability:</strong></th>
-              <td>test</td>
-            </tr>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Conscientiousness:</strong></th>
-              <td>test</td>
-            </tr>
-            <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Extraversion:</strong></th>
-              <td>test</td>
-            </tr>
-          </tbody>
-        </table>
+        <?php
+        echo '<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Score</th>
+            <th scope="col">Count</th>
+          </tr>
+        </thead>
+        <tbody>';
+        $sql = "SELECT COUNT(rating) AS RTCOUNT, 5.0 AS SCORE from ratings WHERE movieId = $id AND rating = 5.0;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 4.5 AS SCORE from ratings WHERE movieId = $id AND rating = 4.5;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 4.0 AS SCORE from ratings WHERE movieId = $id AND rating = 4.0;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 3.5 AS SCORE from ratings WHERE movieId = $id AND rating = 3.5;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 3.0 AS SCORE from ratings WHERE movieId = $id AND rating = 3.0;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 2.5 AS SCORE from ratings WHERE movieId = $id AND rating = 2.5;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 2.0 AS SCORE from ratings WHERE movieId = $id AND rating = 2.0;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 1.5 AS SCORE from ratings WHERE movieId = $id AND rating = 1.5;";
+        $sql .= "SELECT COUNT(rating) AS RTCOUNT, 1.0 AS SCORE from ratings WHERE movieId = $id AND rating = 1.0;";
+    
+        $sql.= "SELECT COUNT(rating) AS RTCOUNT, 0.5 AS SCORE, FROM ratings WHERE movieId = $id AND rating = 0.5;";
+    
+        if (mysqli_multi_query($connection, $sql)) {
+          do {
+        // Store first result set
+            if ($result = mysqli_store_result($connection)) {
+               
+              while ($row = mysqli_fetch_assoc($result)) {
+                echo '<tr>
+                <td>'.$row['SCORE'].'</td>
+                <td> '.$row['RTCOUNT'].'</td>
+                </tr>';
+              }
+              mysqli_free_result($result);
+            }
+        // if there are more result-sets, the print a divider
+            if (mysqli_more_results($connection)) {
+                //printf("-----------------");
+                
+            }
+                 //Prepare next result set
+          } while (mysqli_next_result($connection));
+          }
+        echo'</tbody>
+        </table>';     
+        ?>
+        <?php
+         
+          $query="SELECT ((SELECT COUNT(*) FROM ratings WHERE rating > 3 AND movieId = $id )/ COUNT(*) ) * 100 AS 'Percentage' FROM ratings WHERE movieId = $id";
+
+          $percent=mysqli_query($connection,$query);
+          if(!$percent){
+              die('Cannot read data!'.mysqli_error($connection));
+          }
+          while($row=mysqli_fetch_array($percent)){
+               echo "<h4> Percentage of users who like this film = ${row['Percentage']} % </h4></br>";
+          }
+          
+      
+      
+          $query="SELECT genre, COUNT(*) from genres where movieId in (SELECT movieId From ratings WHERE userId In (SELECT userId FROM ratings WHERE rating >= 4 AND movieId = $id) AND rating >= 4) GROUP BY genre ORDER BY COUNT(*) DESC LIMIT 3";
+      
+          $genre=mysqli_query($connection,$query);
+          if(!$genre){
+              die('Cannot read data!'.mysqli_error($connection));
+          }
+          echo "<h4> Viewers who like this film also like these genres:  </h4>";
+      
+          echo'
+          <table class="table table-sm table-borderless mb-0">
+            <tbody><tr>';
+          while($row=mysqli_fetch_array($genre)){
+               echo "<td> ${row['genre']} </td>";
+          }
+          echo'</tr></tbody></table></br>';
+          
+      
+          $query="SELECT tag, COUNT(*) AS CT from tags where movieId in (SELECT movieId From ratings WHERE userId In (SELECT userId FROM ratings WHERE rating >= 4 AND movieId = $id) AND rating >= 4) GROUP BY tag ORDER BY COUNT(*) DESC LIMIT 3";
+      
+          $tags=mysqli_query($connection,$query);
+          if(!$tags){
+              die('Cannot read data!'.mysqli_error($connection));
+          }
+      
+          echo "<h4> Viewers who like this film also like films with these tags: </h4>";
+          
+          echo'
+          <table class="table table-sm table-borderless mb-0">
+            <tbody><tr>';
+          while($row=mysqli_fetch_array($tags)){
+              echo " <td>${row['tag']} [${row['CT']}] </td>" ;  
+          }
+          echo'</tr></tbody></table></br>';
+      
+          $query="SELECT Info.movieId, Info.title, Info.year FROM movies_info AS Info INNER JOIN (SELECT movieId, rating From ratings WHERE userId In (SELECT userId FROM ratings WHERE rating >= 4 AND movieId = $id) AND rating >= 4 ORDER BY rating DESC LIMIT 4) AS Tops on Tops.movieId = Info.movieId WHERE Info.movieId != $id";
+      
+          $movie=mysqli_query($connection,$query);
+          if(!$movie){
+              die('Cannot read data!'.mysqli_error($connection));
+          }
+          echo "<h4> Viewers who like this film also like these films: </h4>";
+          echo'
+          <table class="table table-sm table-borderless mb-0">
+            <tbody><tr>';
+          while($row=mysqli_fetch_array($movie)){
+      
+               echo "<td> ${row['title']} (${row['year']})</td>";
+          }
+          echo'</tr></tbody></table></br>';
+        ?>
       </div>
     </div>
   
