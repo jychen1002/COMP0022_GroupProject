@@ -148,7 +148,7 @@ if(isset($_POST['signup'])){
     }
     else{
         if($password == $re_pass){
-            $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+            $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
             if(!$connection){
                 die("Fail to connect: " . mysqli_connect_error());
             }
@@ -158,9 +158,13 @@ if(isset($_POST['signup'])){
                 exit;
             }
             $password = md5($password);
-            $sql = "INSERT INTO users(name,email,password)VALUE('$username','$email','$password')";
-            $result = mysqli_query($connection,$sql);
-            if($result){
+            $sql = "INSERT INTO users (name, email, password) VALUE (?,?,?)";
+            $stmt = mysqli_prepare($connection,$sql);
+            mysqli_stmt_bind_param($stmt,'sss', $username, $email, $password);
+            $pass = mysqli_stmt_execute($stmt);
+            //$sql = "INSERT INTO users(name,email,password)VALUE('$username','$email','$password')";
+            //$result = mysqli_query($connection,$sql);
+            if($pass){
                 echo "<script>location.href='signin.php';</script>";
             }else{
                 echo "<script>alert('fail to sign up')</script>";
