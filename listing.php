@@ -68,7 +68,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
+        $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>
@@ -79,23 +79,47 @@
                     <h5>Results</h5>
                     <?php
                         if(strcmp($option, "1")==0){
-                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE title like '%".$keywords."%'";
-                            $result=mysqli_query($connection,$sql);
-                            $row=mysqli_fetch_array($result);
+                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE title like ?";
+                            $newkey = '%'.$keywords.'%';
+                            $stmt = mysqli_prepare($connection, $sql);
+                            mysqli_stmt_bind_param($stmt, 's', $newkey);
+                            mysqli_stmt_execute($stmt);
+                            $result=mysqli_stmt_get_result($stmt);
+                            $row=mysqli_fetch_assoc($result);
+
+
+                            //$result=mysqli_query($connection,$sql);
+                            //$row=mysqli_fetch_array($result);
                             echo "<span>".$row['CT']." Movies Found</span>";
                         }
 
                         if(strcmp($option, "2")==0){
-                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from genres WHERE genre like '%".$keywords."%')";
-                            $result=mysqli_query($connection,$sql);
-                            $row=mysqli_fetch_array($result);
+                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from genres WHERE genre like ?)";
+                            $newkey = '%'.$keywords.'%';
+                            $stmt = mysqli_prepare($connection, $sql);
+                            mysqli_stmt_bind_param($stmt, 's', $newkey);
+                            mysqli_stmt_execute($stmt);
+                            $result=mysqli_stmt_get_result($stmt);
+                            $row=mysqli_fetch_assoc($result);
+
+
+                            //$result=mysqli_query($connection,$sql);
+                            //$row=mysqli_fetch_array($result);
                             echo "<span>".$row['CT']." Movies Found</span>";
                         }
 
                         if(strcmp($option, "3")==0){
-                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from tags WHERE tag like '%".$keywords."%')";
-                            $result=mysqli_query($connection,$sql);
-                            $row=mysqli_fetch_array($result);
+                            $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from tags WHERE tag like ?)";
+
+                            $newkey = '%'.$keywords.'%';
+                            $stmt = mysqli_prepare($connection, $sql);
+                            mysqli_stmt_bind_param($stmt, 's', $newkey);
+                            mysqli_stmt_execute($stmt);
+                            $result=mysqli_stmt_get_result($stmt);
+                            $row=mysqli_fetch_assoc($result);
+
+                            //$result=mysqli_query($connection,$sql);
+                            //$row=mysqli_fetch_array($result);
                             echo "<span>".$row['CT']." Movies Found</span>";
                         }
 
@@ -115,11 +139,8 @@
     
             <div class="listing__list">
             <?php
-
-
-
-            
             //echo "<img src=\"https://image.tmdb.org/t/p/w300$poster_path\">";
+            
 
         
 
@@ -129,13 +150,25 @@
 
                     //$sql="SELECT LINK.imdbId AS IMDBID, MV.title AS TITLE, MV.year AS YEAR FROM links AS LINK INNER JOIN (SELECT * FROM movies_info where title like '%".$keywords."%') AS MV ON LINK.movieId = MV.movieId ORDER BY MV.year DESC";
 
-                    $sql="SELECT * FROM movies_info WHERE title like '%".$keywords."%' ORDER BY year DESC, movieId DESC";
+                    $sql="SELECT * FROM movies_info WHERE title like ? ORDER BY year DESC, movieId DESC";
+                    $newkey = '%'.$keywords.'%';
+                    $stmt = mysqli_prepare($connection, $sql);
+                    mysqli_stmt_bind_param($stmt, 's', $newkey);
+                    mysqli_stmt_execute($stmt);
+                    $result=mysqli_stmt_get_result($stmt);
+                    //$row=mysqli_fetch_assoc($result);
+
+
+
                     //$sql="SELECT*FROM movies_info WHERE title like '%".$keywords."%' ORDER BY year";
-                    $result=mysqli_query($connection,$sql);
-                    if(!$result){
-                        die('Cannot read data!'.mysqli_error($connection));
-                    }
-                    while($row=mysqli_fetch_array($result)){
+                    //$result=mysqli_query($connection,$sql);
+                    //if(!$result){
+                        //die('Cannot read data!'.mysqli_error($connection));
+                    //}
+
+
+
+                    while($row=mysqli_fetch_assoc($result)){
                         $movie_id = $row['movieId'];
                         echo '<div class="listing__item" id = "'.$movie_id.'" onclick = "to_report(this.id)">
                           <img src= "'.$row['imglink'].'">
@@ -155,8 +188,14 @@
                 }
                 
                 if(strcmp($option, "2")==0){
-                    $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM genres WHERE genre like '%".$keywords."%') ORDER BY year DESC, movieId DESC";
-                    $result=mysqli_query($connection,$sql);
+                    $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM genres WHERE genre like ?) ORDER BY year DESC, movieId DESC";
+                    //$result=mysqli_query($connection,$sql);
+                    $newkey = '%'.$keywords.'%';
+                    $stmt = mysqli_prepare($connection, $sql);
+                    mysqli_stmt_bind_param($stmt, 's', $newkey);
+                    mysqli_stmt_execute($stmt);
+                    $result=mysqli_stmt_get_result($stmt);
+
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
@@ -184,8 +223,15 @@
 
                 if(strcmp($option, "3")==0){
                     
-                    $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM tags WHERE tag like '%".$keywords."%') ORDER BY year DESC, movieId DESC";
-                    $result=mysqli_query($connection,$sql);
+                    $sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM tags WHERE tag like ?) ORDER BY year DESC, movieId DESC";
+                    $newkey = '%'.$keywords.'%';
+                    $stmt = mysqli_prepare($connection, $sql);
+                    mysqli_stmt_bind_param($stmt, 's', $newkey);
+                    mysqli_stmt_execute($stmt);
+                    $result=mysqli_stmt_get_result($stmt);
+
+
+                    //$result=mysqli_query($connection,$sql);
                     if(!$result){
                         die('Cannot read data!'.mysqli_error($connection));
                     }
@@ -217,22 +263,37 @@
             <h5>Results</h5>
                 <?php
                     if(strcmp($option, "1")==0){
-                        $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE title like '%".$keywords."%'";
-                        $result=mysqli_query($connection,$sql);
+                        $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE title like ?";
+                        $newkey = '%'.$keywords.'%';
+                        $stmt = mysqli_prepare($connection, $sql);
+                        mysqli_stmt_bind_param($stmt, 's', $newkey);
+                        mysqli_stmt_execute($stmt);
+                        $result=mysqli_stmt_get_result($stmt);
+                        //$result=mysqli_query($connection,$sql);
                         $row=mysqli_fetch_array($result);
                         echo "<span>".$row['CT']." Movies Found</span>";
                     }
 
                     if(strcmp($option, "2")==0){
-                        $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from genres WHERE genre like '%".$keywords."%')";
-                        $result=mysqli_query($connection,$sql);
+                        $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from genres WHERE genre like ?";
+                        $newkey = '%'.$keywords.'%';
+                        $stmt = mysqli_prepare($connection, $sql);
+                        mysqli_stmt_bind_param($stmt, 's', $newkey);
+                        mysqli_stmt_execute($stmt);
+                        $result=mysqli_stmt_get_result($stmt);
+                        //$result=mysqli_query($connection,$sql);
                         $row=mysqli_fetch_array($result);
                         echo "<span>".$row['CT']." Movies Found</span>";
                     }
 
                     if(strcmp($option, "3")==0){
-                        $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from tags WHERE tag like '%".$keywords."%')";
-                        $result=mysqli_query($connection,$sql);
+                        $sql="SELECT COUNT(movieId) AS CT FROM movies_info WHERE movieId in (SELECT movieId from tags WHERE tag like ?)";
+                        $newkey = '%'.$keywords.'%';
+                        $stmt = mysqli_prepare($connection, $sql);
+                        mysqli_stmt_bind_param($stmt, 's', $newkey);
+                        mysqli_stmt_execute($stmt);
+                        $result=mysqli_stmt_get_result($stmt);
+                        //$result=mysqli_query($connection,$sql);
                         $row=mysqli_fetch_array($result);
                         echo "<span>".$row['CT']." Movies Found</span>";
                     }
@@ -263,9 +324,14 @@
                         <tbody>
                         <?php
                             if(strcmp($option, "1")==0){   
-                                $sql="SELECT T.movieId AS ID, T.title AS TITLE, T.year AS YEAR, SCORE.RT AS AVERAGE FROM (SELECT * FROM movies_info WHERE title like '%".$keywords."%') AS T INNER JOIN (SELECT movieId, AVG(rating) AS RT FROM ratings GROUP BY movieId) AS SCORE ON SCORE.movieId = T.movieId ORDER BY T.year DESC, T.movieId DESC";
+                                $sql="SELECT T.movieId AS ID, T.title AS TITLE, T.year AS YEAR, SCORE.RT AS AVERAGE FROM (SELECT * FROM movies_info WHERE title like ?) AS T INNER JOIN (SELECT movieId, AVG(rating) AS RT FROM ratings GROUP BY movieId) AS SCORE ON SCORE.movieId = T.movieId ORDER BY T.year DESC, T.movieId DESC";
+                                $newkey = '%'.$keywords.'%';
+                                $stmt = mysqli_prepare($connection, $sql);
+                                mysqli_stmt_bind_param($stmt, 's', $newkey);
+                                mysqli_stmt_execute($stmt);
+                                $result=mysqli_stmt_get_result($stmt);
                                 //$sql="SELECT*FROM movies_info WHERE title like '%".$keywords."%' ORDER BY year";
-                                $result=mysqli_query($connection,$sql);
+                                //$result=mysqli_query($connection,$sql);
                                 if(!$result){
                                     die('Cannot read data!'.mysqli_error($connection));
                                 }
@@ -284,8 +350,14 @@
                             
                             if(strcmp($option, "2")==0){
                                 $sql= "SELECT T.movieId AS ID, T.title AS TITLE, T.year AS YEAR, SCORE.RT AS AVERAGE FROM (SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM genres WHERE genre like '%".$keywords."%')) AS T INNER JOIN (SELECT movieId, AVG(rating) AS RT FROM ratings GROUP BY movieId) AS SCORE ON SCORE.movieId = T.movieId ORDER BY T.year DESC, T.movieId DESC";
-                                //$sql="SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM genres WHERE genre like '%".$keywords."%') ORDER BY year DESC";
-                                $result=mysqli_query($connection,$sql);
+
+                                $newkey = '%'.$keywords.'%';
+                                $stmt = mysqli_prepare($connection, $sql);
+                                mysqli_stmt_bind_param($stmt, 's', $newkey);
+                                mysqli_stmt_execute($stmt);
+                                $result=mysqli_stmt_get_result($stmt);
+                                
+                                //$result=mysqli_query($connection,$sql);
                                 if(!$result){
                                     die('Cannot read data!'.mysqli_error($connection));
                                 }
@@ -305,7 +377,13 @@
                             if(strcmp($option, "3")==0){
                                 
                                 $sql="SELECT T.movieId AS ID, T.title AS TITLE, T.year AS YEAR, SCORE.RT AS AVERAGE FROM (SELECT * FROM movies_info WHERE movieId in (SELECT movieId FROM tags WHERE tag like '%".$keywords."%')) AS T INNER JOIN (SELECT movieId, AVG(rating) AS RT FROM ratings GROUP BY movieId) AS SCORE ON SCORE.movieId = T.movieId ORDER BY T.year DESC, T.movieId DESC";
-                                $result=mysqli_query($connection,$sql);
+
+                                $newkey = '%'.$keywords.'%';
+                                $stmt = mysqli_prepare($connection, $sql);
+                                mysqli_stmt_bind_param($stmt, 's', $newkey);
+                                mysqli_stmt_execute($stmt);
+                                $result=mysqli_stmt_get_result($stmt);
+                                //$result=mysqli_query($connection,$sql);
                                 if(!$result){
                                     die('Cannot read data!'.mysqli_error($connection));
                                 }
@@ -350,10 +428,10 @@
         </script>
 
        <script type="text/javascript">
-            function to_report(e){
-                window.location.href = "../report.php?movieId="+e;
-            }
-        </script>
+       function to_report(e){
+           window.location.href = "../report.php?movieId="+e;
+       }
+            </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
