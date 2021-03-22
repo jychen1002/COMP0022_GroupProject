@@ -52,6 +52,7 @@
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
                                         <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
+                                <li><a href="./prediction.php">PREDICTIONS</a>
                             </ul>
                         </nav>
                         <?php if(!$_SESSION['user']){ ?>

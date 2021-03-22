@@ -52,6 +52,7 @@
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
                                         <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
+                                <li><a href="./prediction.php">PREDICTIONS</a>
                             </ul>
                         </nav>
                         <?php session_start();?>
@@ -60,7 +61,7 @@
                             <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
                         </div><?php }else{ ?>
                         <div class="header__menu__right">
-                            <a href="signin.php?action=logout" class="login-btn"><i class="fa fa-sign-out-alt"></i></a>
+                            <a href="signin.php?action=logout">LOG OUT</a>
                         </div><?php
                             if($_GET['action'] == "logout"){
                                 $_SESSION = array();
@@ -79,7 +80,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
+        $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>

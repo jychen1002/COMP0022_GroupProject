@@ -1,5 +1,5 @@
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','Liao1531639504_','Movie_Database');
+    $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,12 +162,12 @@
                                     $year = $_POST['year'];
                                     $genre = $_POST['genre'];
                                     $release = $_POST['release'];
-                                    $max = "SELECT MAX(movieId) AS MI FROM 'movies_info'";
+                                    $max = "SELECT MAX(movieId) AS MI FROM movies_info";
                                     $max_result = mysqli_query($connection,$max);
                                     $row = mysqli_fetch_array($max_result);
-                                    $id = $row['MI'] +1;
+                                    $id = $row[0] +1;
                                     if($movie_Name!=""){
-                                        $sql = "INSERT INTO movies_info(movieId,title,year)VALUES('$id','$movie_Name','$year')";
+                                        $sql = "INSERT INTO movies_info(movieId,title,year,imglink)VALUES('$id','$movie_Name','$year','dhdjdk')";
                                         $result = mysqli_query($connection,$sql);
                                         if(!$result){
                                             die('Cannot read data!'.mysqli_error($connection));
@@ -175,7 +175,7 @@
                                         $genre_sql = "INSERT INTO genres(movieId, genre)VALUES('$id','$genre')";
                                         mysqli_query($connection,$genre_sql);
                                         $release_message= "1";
-                                        if($release == "Yes"){
+                                        if($release == "yes"){
                                             $release_sql = "INSERT INTO release_info(movieId, released)VALUES('$id', b'1')";
                                             mysqli_query($connection,$release_sql);
                                         }

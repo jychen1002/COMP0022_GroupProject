@@ -52,6 +52,7 @@
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
                                         <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
+                                <li><a href="./prediction.php">PREDICTIONS</a>
                             </ul>
                         </nav>
                         <?php session_start();?>
@@ -60,7 +61,7 @@
                             <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
                         </div><?php }else{ ?>
                         <div class="header__menu__right">
-                            <a href="signin.php?action=logout" class="login-btn"><i class="fa fa-sign-out-alt"></i></a>
+                            <a href="signin.php?action=logout">LOG OUT</a>
                         </div><?php
                             if($_GET['action'] == "logout"){
                                 $_SESSION = array();
@@ -95,7 +96,7 @@
     
             <div class="listing__list">
             <?php
-              $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
+              $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
               $query = "SELECT*FROM movies_info";
               $result = mysqli_query($connection,$query)
                 or die('Error making select users query' . mysql_error());
@@ -148,7 +149,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
+                                $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
                                 $sql="SELECT movies_info.title AS NEWT, movies_info.movieId AS NEWI, movies_info.year AS NEWY, RT.AVERAGE AS NEWA, RT.CT AS NEWC FROM (SELECT movieId AS ID, AVG(rating) AS AVERAGE, COUNT(movieId) AS CT from ratings GROUP BY movieId) as RT INNER JOIN movies_info ON RT.ID = movies_info.movieId ORDER BY movies_info.movieId";
                                 $result=mysqli_query($connection,$sql);
                                 if(!$result){

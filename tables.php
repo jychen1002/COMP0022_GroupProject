@@ -1,5 +1,5 @@
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','Liao1531639504_','Movie_Database');
+    $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Admin-DashTables</title>
 
     <!-- Custom fonts for this template -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -52,9 +52,15 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="index.php">
+                    <i class="fas fa-fw fa-search"></i>
+                    <span>Search</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="prediction.php">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Prediction</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
@@ -99,7 +105,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>

@@ -50,6 +50,7 @@
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
                                         <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
+                                <li><a href="./prediction.php">PREDICTIONS</a>
                             </ul>
                         </nav>
                         <?php if(!$_SESSION['user']){ ?>
@@ -90,10 +91,6 @@
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="your_pass" id="your_pass" placeholder="Password"/>
                             </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
-                            </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
                             </div>
@@ -133,11 +130,15 @@ if(isset($_POST['signin'])){
         die("Fail to connect: " . mysqli_connect_error());
     }
 
-    $sql = "SELECT ID FROM users WHERE name = '$username' AND password = '$password' LIMIT 1";
+    $sql = "SELECT ID, isAdmin FROM users WHERE name = '$username' AND password = '$password' LIMIT 1";
     $result = mysqli_query($connection,$sql);
-    if(mysqli_fetch_array($result)){
+    $row = mysqli_fetch_array($result);
+    if(isset($row)){
         session_start();
-        $_SESSION['user'] = $username;
+        $_SESSION['user'] = $row[0];
+        if($row[1]){
+            echo "<script>location.href='tables.php';</script>";
+        }
         echo "<script>location.href='index.php';</script>";
     }
     else{

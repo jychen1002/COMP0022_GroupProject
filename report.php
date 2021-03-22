@@ -1,5 +1,5 @@
 <?php
-  $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
+  $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
   $id = $_GET['movieId'];
   $sql="SELECT*FROM movies_info WHERE movieId = $id";
   $result=mysqli_query($connection,$sql);
@@ -81,11 +81,23 @@
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
                                         <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
+                                <li><a href="./prediction.php">PREDICTIONS</a>
                             </ul>
                         </nav>
+                        <?php session_start();?>
+                        <?php if(!$_SESSION['user']){ ?>
                         <div class="header__menu__right">
                             <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
-                        </div>
+                        </div><?php }else{ ?>
+                        <div class="header__menu__right">
+                            <a href="signin.php?action=logout">LOG OUT</a>
+                        </div><?php
+                            if($_GET['action'] == "logout"){
+                                $_SESSION = array();
+                                session_destroy();
+                                echo "<script>location.href='signin.php';</script>";
+                            }
+                        }?>
                     </div>
                 </div>
             </div>
