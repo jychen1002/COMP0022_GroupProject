@@ -182,11 +182,11 @@
 
                     while($row=mysqli_fetch_assoc($result)){
                         $movie_id = $row['movieId'];
-                        echo '<div class="listing__item" id = "'.$movie_id.'" onclick = "to_report(this.id)">
+                        echo '<div class="listing__item">
                           <img src= "'.$row['imglink'].'">
                                 <div class="listing__item__text">
                                     <div class="listing__item__text__inside">
-                                        <h5 >'.$row['title'].'</h5>
+                                        <h5 onclick = "to_report('.$movie_id.')">'.$row['title'].'</h5>
                                         <div class="listing__item__text__rating">
                                             <div class="listing__item__rating__star">
                                                 <h5>'.$row['year'].'</h5>
@@ -213,13 +213,13 @@
                     }
                     while($row=mysqli_fetch_array($result)){
                         $movie_id = $row['movieId'];
-                        echo '<div class="listing__item" id = "'.$movie_id.'" onclick = "to_report(this.id)">
+                        echo '<div class="listing__item">
                                
                                  <img src= "'.$row['imglink'].'">
                                 
                                 <div class="listing__item__text">
                                     <div class="listing__item__text__inside">
-                                        <h5>'.$row['title'].'</h5>
+                                    <h5 onclick = "to_report('.$movie_id.')">'.$row['title'].'</h5>
                                         <div class="listing__item__text__rating">
                                             <div class="listing__item__rating__star">
                                                 <h5>'.$row['year'].'</h5>
@@ -249,12 +249,12 @@
                     }
                     while($row=mysqli_fetch_array($result)){
                         $movie_id = $row['movieId'];
-                        echo '<div class="listing__item" id = "'.$movie_id.'" onclick = "to_report(this.id)">
+                        echo '<div class="listing__item">
                            <img src= "'.$row['imglink'].'">
                                 
                                 <div class="listing__item__text">
                                     <div class="listing__item__text__inside">
-                                        <h5>'.$row['title'].'</h5>
+                                        <h5 onclick = "to_report('.$movie_id.')">'.$row['title'].'</h5>
                                         <div class="listing__item__text__rating">
                                             <div class="listing__item__rating__star">
                                                 <h5>'.$row['year'].'</h5>
