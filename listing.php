@@ -54,9 +54,20 @@
                                     </ul>
                             </ul>
                         </nav>
+                        <?php session_start();?>
+                        <?php if(!$_SESSION['user']){ ?>
                         <div class="header__menu__right">
                             <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
-                        </div>
+                        </div><?php }else{ ?>
+                        <div class="header__menu__right">
+                            <a href="signin.php?action=logout" class="login-btn"><i class="fa fa-sign-out-alt"></i></a>
+                        </div><?php
+                            if($_GET['action'] == "logout"){
+                                $_SESSION = array();
+                                session_destroy();
+                                echo "<script>location.href='signin.php';</script>";
+                            }
+                        }?>
                     </div>
                 </div>
             </div>
