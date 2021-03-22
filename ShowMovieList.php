@@ -52,7 +52,6 @@
                                         <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
                                         <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
-                                <li><a href="./prediction.php">PREDICTIONS</a>
                             </ul>
                         </nav>
                         <?php session_start();?>
@@ -61,7 +60,7 @@
                             <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
                         </div><?php }else{ ?>
                         <div class="header__menu__right">
-                            <a href="signin.php?action=logout">LOG OUT</a>
+                            <a href="signin.php?action=logout" class="login-btn"><i class="fa fa-sign-out-alt"></i></a>
                         </div><?php
                             if($_GET['action'] == "logout"){
                                 $_SESSION = array();
@@ -103,11 +102,11 @@
               
               while ($row = mysqli_fetch_array($result)){
                 $movie_id = $row['movieId'];
-                echo '<div class="listing__item" id = "'.$movie_id.'" onclick = "to_report(this.id)">
+                echo '<div class="listing__item">
                 <img src= "'.$row['imglink'].'">
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5 onclick = "to_report(this)">'.$row['title'].'</h5>
+                        <h5 onclick = "to_report('.$movie_id.')">'.$row['title'].'</h5>
                         <div class="listing__item__text__rating">
                             <div class="listing__item__rating__star">
                                 <h5>'.$row['year'].'</h5>
@@ -117,6 +116,7 @@
                 </div>
               </div>';
                 }
+                mysqli_free_result($result);
                 mysqli_close($connection);
             ?>
             </div>
@@ -149,7 +149,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+                                $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
                                 $sql="SELECT movies_info.title AS NEWT, movies_info.movieId AS NEWI, movies_info.year AS NEWY, RT.AVERAGE AS NEWA, RT.CT AS NEWC FROM (SELECT movieId AS ID, AVG(rating) AS AVERAGE, COUNT(movieId) AS CT from ratings GROUP BY movieId) as RT INNER JOIN movies_info ON RT.ID = movies_info.movieId ORDER BY movies_info.movieId";
                                 $result=mysqli_query($connection,$sql);
                                 if(!$result){
