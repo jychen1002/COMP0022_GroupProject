@@ -30,6 +30,7 @@
 <body>
 
     <div class="main">
+    <?php session_start();?>
         <!-- Header Section Begin -->
     <header class="header header--normal">
         <div class="container-fluid">
@@ -44,27 +45,28 @@
                     <div class="header__nav">
                         <nav class="header__menu mobile-menu">
                             <ul>
-                                <li><form class=" navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search movies,tags,and genres..."
-                                            aria-label="Search" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form></li>
-                                <li><a href="./listing.php">LISTING</a>
+                                <li><a href="./index.php">SEARCHING</a>
+                                <li><a href="./ShowMovieList.php">LISTING</a>
                                 <li><a href=#>RANKING</a>
                                     <ul class="dropdown">
-                                        <li><a href="./popular.html">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./popular.php">THE MOST POPULAR FILMS</a></li>
+                                        <li><a href="./polarising.php">THE MOST POLARISING FILMS</a></li>
                                     </ul>
                             </ul>
                         </nav>
+                        <?php if(!$_SESSION['user']){ ?>
                         <div class="header__menu__right">
                             <a href="signin.php" class="login-btn"><i class="fa fa-user"></i></a>
-                        </div>
+                        </div><?php }else{ ?>
+                        <div class="header__menu__right">
+                            <a href="signin.php?action=logout" class="login-btn"><i class="fa fa-sign-out-alt"></i></a>
+                        </div><?php
+                            if($_GET['action'] == "logout"){
+                                $_SESSION = array();
+                                session_destroy();
+                                echo "<script>location.href='signin.php';</script>";
+                            }
+                        }?>
                     </div>
                 </div>
             </div>
@@ -73,6 +75,7 @@
         <!-- Sign up form -->
         <section class="signup">
             <div class="container">
+            <?php if(!$_SESSION['user']){ ?>
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
@@ -107,6 +110,8 @@
                         <a href="./signin.php" class="signup-image-link">I am already member</a>
                     </div>
                 </div>
+                <?php }else{ ?>
+                    <h1><?php echo "user already log in";?></h1><?php } ?>
             </div>
         </section>
     </div>
