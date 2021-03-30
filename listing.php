@@ -80,7 +80,7 @@
 
     <!-- Listing Section Begin -->
     <?php
-        $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+        $connection = mysqli_connect('127.0.0.1','admin','[password]','newDB');
         $keywords=$_POST['keywords'];                
         $option = $_POST['select_option'];
     ?>

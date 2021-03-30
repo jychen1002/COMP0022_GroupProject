@@ -95,7 +95,7 @@
     
             <div class="listing__list">
             <?php
-              $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+              $connection = mysqli_connect('127.0.0.1','admin','[password]','newDB');
               $query = "SELECT*FROM movies_info";
               $result = mysqli_query($connection,$query)
                 or die('Error making select users query' . mysql_error());
@@ -149,7 +149,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                $connection = mysqli_connect('127.0.0.1','root','12345678','Movie_Database');
+                                $connection = mysqli_connect('127.0.0.1','admin','[password]','Movie_Database');
                                 $sql="SELECT movies_info.title AS NEWT, movies_info.movieId AS NEWI, movies_info.year AS NEWY, RT.AVERAGE AS NEWA, RT.CT AS NEWC FROM (SELECT movieId AS ID, AVG(rating) AS AVERAGE, COUNT(movieId) AS CT from ratings GROUP BY movieId) as RT INNER JOIN movies_info ON RT.ID = movies_info.movieId ORDER BY movies_info.movieId";
                                 $result=mysqli_query($connection,$sql);
                                 if(!$result){

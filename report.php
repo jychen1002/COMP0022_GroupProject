@@ -1,5 +1,5 @@
 <?php
-  $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+  $connection = mysqli_connect('127.0.0.1','admin','[password]','newDB');
   $id = $_GET['movieId'];
   $sql="SELECT*FROM movies_info WHERE movieId = $id";
   $result=mysqli_query($connection,$sql);

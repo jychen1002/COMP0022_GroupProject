@@ -125,7 +125,7 @@ if(isset($_POST['signin'])){
     $password = md5($_POST['your_pass']);
 
     //connect to database
-    $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
+    $connection = mysqli_connect('127.0.0.1','admin','[password]','newDB');
     if(!$connection){
         die("Fail to connect: " . mysqli_connect_error());
     }

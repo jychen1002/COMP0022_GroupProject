@@ -1,5 +1,5 @@
 <?php
-    $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+    $connection = mysqli_connect('127.0.0.1','admin','[password]','newDB');
 ?>
 <!DOCTYPE html>
 <html lang="en">
