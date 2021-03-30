@@ -148,7 +148,7 @@ if(isset($_POST['signup'])){
     }
     else{
         if($password == $re_pass){
-            $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
+            $connection = mysqli_connect('127.0.0.1','root','','newDB');
             if(!$connection){
                 die("Fail to connect: " . mysqli_connect_error());
             }

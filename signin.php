@@ -125,13 +125,17 @@ if(isset($_POST['signin'])){
     $password = md5($_POST['your_pass']);
 
     //connect to database
-    $connection = mysqli_connect('127.0.0.1','root','12345678','newDB');
+    $connection = mysqli_connect('127.0.0.1','root','newroot12','newDB');
     if(!$connection){
         die("Fail to connect: " . mysqli_connect_error());
     }
-
     $sql = "SELECT ID, isAdmin FROM users WHERE name = '$username' AND password = '$password' LIMIT 1";
-    $result = mysqli_query($connection,$sql);
+
+    $stmt = mysqli_prepare($connection,$sql);
+    mysqli_stmt_bind_param($stmt, 'ss', $username, $password);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+ 
     $row = mysqli_fetch_array($result);
     if(isset($row)){
         session_start();
